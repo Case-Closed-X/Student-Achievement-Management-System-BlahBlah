@@ -6,3 +6,5 @@
 🌟我的邮箱：CaseClosedX@outlook.com。
 
 🌟效果图
+
+![image](https://github.com/Case-Closed-X/Student-Achievement-Management-System-BlahBlah/blob/f787b8171d39798c132c89109a5243a407b6df9b/images/main_window.png)
