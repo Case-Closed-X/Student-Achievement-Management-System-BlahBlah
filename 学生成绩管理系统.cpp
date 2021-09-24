@@ -1,1215 +1,1275 @@
-/*ç³»ç»Ÿæ¶æ„::å¤´æ–‡ä»¶*/
-#include <iostream>//ä½¿ç”¨iostreamå¤´æ–‡ä»¶ï¼ŒåŒ…å«æ ‡å‡†è¾“å…¥è¾“å‡ºæµç­‰
-using namespace std;//æ­¤ç¨‹åºè¾ƒç®€å•ï¼Œæ•…è€Œä½¿ç”¨æ ‡å‡†å‘½åç©ºé—´std
-#include <conio.h>//ä½¿ç”¨conio.hå¤´æ–‡ä»¶ï¼ŒåŒ…å«_getch()
-#include <windows.h>//ä½¿ç”¨windows.hå¤´æ–‡ä»¶ï¼Œè°ƒç”¨Windows APIç›¸å…³
-#include <strsafe.h>//å‚è€ƒå¾®è½¯æ–‡æ¡£ç”¨æ³•ï¼ŒåŒ…å«StringCchPrintf()ï¼Œç”¨ä»¥æ ¼å¼åŒ–å­—ç¬¦ä¸²
-#include <fstream>//æ–‡ä»¶å†™å…¥ç›¸å…³
-#include <ctime>//ä¿å­˜æˆç»©åŒæ—¶ä¿å­˜å½“å‰æ—¶é—´
-/*ç³»ç»Ÿæ¶æ„::å¤´æ–‡ä»¶ç»“æŸ*/
+/*ÏµÍ³¼Ü¹¹::Í·ÎÄ¼ş*/
+#include <iostream>//Ê¹ÓÃiostreamÍ·ÎÄ¼ş£¬°üº¬±ê×¼ÊäÈëÊä³öÁ÷µÈ
+using namespace std;//´Ë³ÌĞò½Ï¼òµ¥ÇÒ×÷ÒµÒªÇóÖĞÖ¸Ã÷±àĞ´¿ØÖÆÌ¨Ó¦ÓÃ³ÌĞò£¬¹Ê¶øÊ¹ÓÃ±ê×¼ÃüÃû¿Õ¼ästd
+#include <conio.h>//Ê¹ÓÃconio.hÍ·ÎÄ¼ş£¬°üº¬_getch()
+#include <windows.h>//Ê¹ÓÃwindows.hÍ·ÎÄ¼ş£¬µ÷ÓÃWindows APIÏà¹Ø
+#include <strsafe.h>//²Î¿¼Î¢ÈíÎÄµµÓÃ·¨£¬°üº¬StringCchPrintf()£¬ÓÃÒÔ¸ñÊ½»¯×Ö·û´®
+#include <fstream>//ÎÄ¼şĞ´ÈëÏà¹Ø
+#include <ctime>//±£´æ³É¼¨Í¬Ê±±£´æµ±Ç°Ê±¼ä
+/*ÏµÍ³¼Ü¹¹::Í·ÎÄ¼ş½áÊø*/
 
-/*ç³»ç»Ÿæ¶æ„::ç³»ç»ŸåŠŸèƒ½å®å®šä¹‰*/
-#define Cls() system("cls")//å®å®šä¹‰è°ƒç”¨systemå‡½æ•°æ‰§è¡ŒCMDå‘½ä»¤è¿›è¡Œæ¸…å±æ“ä½œï¼Œæš‚æœªæ‰¾åˆ°æ›´å¥½çš„æ›¿ä»£æ–¹æ³•
-/*ç³»ç»Ÿæ¶æ„::ç³»ç»ŸåŠŸèƒ½å®å®šä¹‰ç»“æŸ*/
+/*ÏµÍ³¼Ü¹¹::ÏµÍ³¹¦ÄÜºê¶¨Òå*/
+#define Cls() system("cls")//ºê¶¨Òåµ÷ÓÃsystemº¯ÊıÖ´ĞĞCMDÃüÁî½øĞĞÇåÆÁ²Ù×÷£¬ÔİÎ´ÕÒµ½¸üºÃµÄÌæ´ú·½·¨
+/*ÏµÍ³¼Ü¹¹::ÏµÍ³¹¦ÄÜºê¶¨Òå½áÊø*/
 
-
-/*===================å°è£…ç³»ç»Ÿæ¶æ„ç±»===================*/
+/*===================·â×°ÏµÍ³¼Ü¹¹Àà===================*/
 class Framework
 {
-private://ç§æœ‰æˆå‘˜æš‚æ— 
+private://Ë½ÓĞ³ÉÔ±ÔİÎŞ
 
-protected://ä¿æŠ¤æˆå‘˜æš‚æ— 
+protected://±£»¤³ÉÔ±ÔİÎŞ
 
-public://å…¬æœ‰æˆå‘˜
+public://¹«ÓĞ³ÉÔ±
 
-	/*ç³»ç»Ÿæ¶æ„::å˜é‡å®šä¹‰*/
-	char input_char = NULL;//å®šä¹‰è¾“å…¥çš„å­—ç¬¦ï¼Œç”¨ä»¥åˆ¤æ–­
-	int input_int = NULL;//å®šä¹‰è¾“å…¥çš„æ•°å€¼ï¼Œç”¨ä»¥åˆ¤æ–­
-	string input_string = "NULL";//å®šä¹‰è¾“å…¥çš„stringç±»ï¼Œç”¨ä»¥åˆ¤æ–­
-	char CR = NULL;//å®šä¹‰è¾“å…¥å­—ç¬¦ï¼Œç”¨ä»¥åˆ¤æ–­ç¬¬äºŒæ¬¡è¾“å…¥çš„å›è½¦é”®
-	bool error = false;//åˆ¤æ–­æ˜¯å¦å‡ºé”™
-	/*ç³»ç»Ÿæ¶æ„::å˜é‡å®šä¹‰ç»“æŸ*/
+	/*ÏµÍ³¼Ü¹¹::±äÁ¿¶¨Òå*/
+	char input_char = NULL;//¶¨ÒåÊäÈëµÄ×Ö·û£¬ÓÃÒÔÅĞ¶Ï
+	int input_int = NULL;//¶¨ÒåÊäÈëµÄÊıÖµ£¬ÓÃÒÔÅĞ¶Ï
+	string input_string = "NULL";//¶¨ÒåÊäÈëµÄstringÀà£¬ÓÃÒÔÅĞ¶Ï
+	char CR = NULL;//¶¨ÒåÊäÈë×Ö·û£¬ÓÃÒÔÅĞ¶ÏµÚ¶ş´ÎÊäÈëµÄ»Ø³µ¼ü
+	bool error = false;//ÅĞ¶ÏÊÇ·ñ³ö´í
+	/*ÏµÍ³¼Ü¹¹::±äÁ¿¶¨Òå½áÊø*/
 
-	/*ç³»ç»Ÿæ¶æ„::è®¾ç½®æ§åˆ¶å°æ ‡é¢˜*/
-	TCHAR szOldTitle[MAX_PATH] = TEXT("NULL");//ä¿å­˜æ—§çš„æ§åˆ¶å°æ ‡é¢˜
-	TCHAR szNewTitle[MAX_PATH] = TEXT("NULL");//è®¾ç½®æ–°çš„æ§åˆ¶å°æ ‡é¢˜
+	/*ÏµÍ³¼Ü¹¹::ÉèÖÃ¿ØÖÆÌ¨±êÌâ*/
+	TCHAR szOldTitle[MAX_PATH] = TEXT("NULL");//±£´æ¾ÉµÄ¿ØÖÆÌ¨±êÌâ
+	TCHAR szNewTitle[MAX_PATH] = TEXT("NULL");//ÉèÖÃĞÂµÄ¿ØÖÆÌ¨±êÌâ
 
-	void Title(const wchar_t* title)//ä¼ å…¥æ§åˆ¶å°æ ‡é¢˜
+	void Title(const wchar_t* title)//´«Èë¿ØÖÆÌ¨±êÌâ
 	{
-		if (GetConsoleTitle(szOldTitle, MAX_PATH))//è·å¾—æ—§æ ‡é¢˜
+		if (GetConsoleTitle(szOldTitle, MAX_PATH))//»ñµÃ¾É±êÌâ
 		{
-			StringCchPrintf(szNewTitle, MAX_PATH, title, szOldTitle);//å‚è€ƒå¾®è½¯æ–‡æ¡£ç”¨æ³•ï¼Œè¿”å›æ ¼å¼åŒ–å­—ç¬¦ä¸²
-			SetConsoleTitle(szNewTitle);//è®¾ç½®æ–°æ ‡é¢˜
+			StringCchPrintf(szNewTitle, MAX_PATH, title, szOldTitle);//²Î¿¼Î¢ÈíÎÄµµÓÃ·¨£¬·µ»Ø¸ñÊ½»¯×Ö·û´®
+			SetConsoleTitle(szNewTitle);//ÉèÖÃĞÂ±êÌâ
 		}
 	}
-	/*ç³»ç»Ÿæ¶æ„::è®¾ç½®æ§åˆ¶å°æ ‡é¢˜ç»“æŸ*/
+	/*ÏµÍ³¼Ü¹¹::ÉèÖÃ¿ØÖÆÌ¨±êÌâ½áÊø*/
 
-	/*ç³»ç»Ÿæ¶æ„::è®¾ç½®æ§åˆ¶å°çª—å£ä¸ç¼“å†²åŒºçš„ä½ç½®ä¸å¤§å°*/
-	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);//è·å¾—æ ‡å‡†è¾“å‡ºå¥æŸ„
+	/*ÏµÍ³¼Ü¹¹::ÉèÖÃ¿ØÖÆÌ¨´°¿ÚÓë»º³åÇøµÄÎ»ÖÃÓë´óĞ¡*/
+	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);//»ñµÃ±ê×¼Êä³ö¾ä±ú
 
-	void Window(int pos_x, int pos_y, int cols, int lines)//è®¾ç½®çª—å£å’Œç¼“å†²åŒºå¤§å°
+	void Window(int pos_x, int pos_y, int cols, int lines)//ÉèÖÃ´°¿ÚºÍ»º³åÇø´óĞ¡
 	{
-		SMALL_RECT rc = { SHORT(pos_x),SHORT(pos_y), SHORT(cols - 1), SHORT(lines - 1) };//çª—å£ä½ç½®ä¸å¤§å°
-		SetConsoleWindowInfo(hStdout, true, &rc);//é‡æ–°è®¾ç½®çª—å£å¤§å°
-		COORD size = { SHORT(cols), 9000 };//ç¼“å†²åŒºå¤§å°ï¼Œè®¾ç½®9000è¡Œç¼“å†²åŒºï¼Œè¾“å‡ºè‚¯å®šå¤Ÿç”¨ï¼Œå¥½ä½¿ï¼
-		SetConsoleScreenBufferSize(hStdout, size);//é‡æ–°è®¾ç½®ç¼“å†²åŒºå¤§å°
+		SMALL_RECT rc = { SHORT(pos_x),SHORT(pos_y), SHORT(cols - 1), SHORT(lines - 1) };//´°¿ÚÎ»ÖÃÓë´óĞ¡
+		SetConsoleWindowInfo(hStdout, true, &rc);//ÖØĞÂÉèÖÃ´°¿Ú´óĞ¡
+		COORD size = { SHORT(cols), 9000 };//»º³åÇø´óĞ¡£¬ÉèÖÃ9000ĞĞ»º³åÇø£¬Êä³ö¿Ï¶¨¹»ÓÃ£¬ºÃÊ¹£¡
+		SetConsoleScreenBufferSize(hStdout, size);//ÖØĞÂÉèÖÃ»º³åÇø´óĞ¡
+		SetWindowLongPtrA(//Ê¹¿ØÖÆÌ¨´°¿ÚÎŞ·¨¸ü¸Ä´óĞ¡£¬±ÜÃâbug
+			GetConsoleWindow(),
+			GWL_STYLE,
+			GetWindowLongPtrA(GetConsoleWindow(), GWL_STYLE)
+			& ~WS_SIZEBOX
+		);//& ~WS_MAXIMIZEBOX & ~WS_MINIMIZEBOXÒş²Ø×î´ó»¯×îĞ¡»¯°´Å¥
 	}
-	/*ç³»ç»Ÿæ¶æ„::è®¾ç½®æ§åˆ¶å°çª—å£ä¸ç¼“å†²åŒºçš„ä½ç½®ä¸å¤§å°ç»“æŸ*/
+	/*ÏµÍ³¼Ü¹¹::ÉèÖÃ¿ØÖÆÌ¨´°¿ÚÓë»º³åÇøµÄÎ»ÖÃÓë´óĞ¡½áÊø*/
 
-	/*ç³»ç»Ÿæ¶æ„::å­—ä½“é¢œè‰²å®šä¹‰*/
-	void Black()//ç™½è‰²èƒŒæ™¯ï¼Œç¼ºçœé»‘è‰²å­—ä½“
+	/*ÏµÍ³¼Ü¹¹::ÇåÆÁ*/
+	/*void Cls() {//ÇåÆÁº¯Êı£¬²»Ì«ºÃÓÃ£¬ÈÔÈ»»áµ¼ÖÂÉÁÆÁ×´¿ö·¢Éú£¬ÇÒÄ¿Ç°ÓĞbug
+		CONSOLE_SCREEN_BUFFER_INFO cursor;
+		GetConsoleScreenBufferInfo(hStdout, &cursor);//µÃµ½µ±Ç°¹â±êÎ»ÖÃ
+
+		SetConsoleCursorPosition(hStdout, { 0,0 });//ÉèÖÃ¹â±êÎ»ÖÃÎª{ 0,0 }
+		for (SHORT i = 0; i <= cursor.dwCursorPosition.Y ; i++)//Ã¿ĞĞ¶¼Çå¿Õ
+		{
+			for (size_t i = 1; i < 80 + 1; i++)//i¾ø²»ÄÜ=0
+			{
+				cout << ' ';//¸²¸ÇBackspaceÌ«³¤ÁËµÄbug
+			}
+		}
+		SetConsoleCursorPosition(hStdout, { 0,0 });//ÉèÖÃ¹â±êÎ»ÖÃÎª{ 0,0 }
+	}*/
+	/*ÏµÍ³¼Ü¹¹::ÇåÆÁ½áÊø*/
+
+	/*ÏµÍ³¼Ü¹¹::×ÖÌåÑÕÉ«¶¨Òå*/
+	void Black()//°×É«±³¾°£¬È±Ê¡ºÚÉ«×ÖÌå
 	{
 		SetConsoleTextAttribute(hStdout, BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE);
 	}
 
-	void Black_White()//é»‘è‰²èƒŒæ™¯ï¼Œç™½è‰²å­—ä½“
+	void Black_White()//ºÚÉ«±³¾°£¬°×É«×ÖÌå
 	{
 		SetConsoleTextAttribute(hStdout, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
 	}
 
-	void Black_Red()//é»‘è‰²èƒŒæ™¯ï¼Œçº¢è‰²å­—ä½“
+	void Black_Red()//ºÚÉ«±³¾°£¬ºìÉ«×ÖÌå
 	{
 		SetConsoleTextAttribute(hStdout, FOREGROUND_INTENSITY | FOREGROUND_RED);
 	}
 
-	void Black_Yellow()//é»‘è‰²èƒŒæ™¯ï¼Œé»„è‰²å­—ä½“
+	void Black_Yellow()//ºÚÉ«±³¾°£¬»ÆÉ«×ÖÌå
 	{
 		SetConsoleTextAttribute(hStdout, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN);
 	}
 
-	void Purple()//ç™½è‰²èƒŒæ™¯ï¼Œç´«è‰²å­—ä½“
+	void Purple()//°×É«±³¾°£¬×ÏÉ«×ÖÌå
 	{
 		SetConsoleTextAttribute(hStdout, BACKGROUND_INTENSITY | FOREGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | FOREGROUND_RED | FOREGROUND_BLUE);
 	}
 
-	void Red()//ç™½è‰²èƒŒæ™¯ï¼Œçº¢è‰²å­—ä½“
+	void Red()//°×É«±³¾°£¬ºìÉ«×ÖÌå
 	{
 		SetConsoleTextAttribute(hStdout, BACKGROUND_INTENSITY | FOREGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | FOREGROUND_RED);
 	}
 
-	void Green()//ç™½è‰²èƒŒæ™¯ï¼Œç»¿è‰²å­—ä½“
+	void Green()//°×É«±³¾°£¬ÂÌÉ«×ÖÌå
 	{
 		SetConsoleTextAttribute(hStdout, BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | FOREGROUND_GREEN);
 	}
 
-	void Magenta()//ç™½è‰²èƒŒæ™¯ï¼Œç´«çº¢è‰²å­—ä½“
+	void Magenta()//°×É«±³¾°£¬×ÏºìÉ«×ÖÌå
 	{
 		SetConsoleTextAttribute(hStdout, BACKGROUND_INTENSITY | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | FOREGROUND_RED | FOREGROUND_BLUE);
 	}
-	/*ç³»ç»Ÿæ¶æ„::å­—ä½“é¢œè‰²å®šä¹‰ç»“æŸ*/
+	/*ÏµÍ³¼Ü¹¹::×ÖÌåÑÕÉ«¶¨Òå½áÊø*/
 
-	/*ç³»ç»Ÿæ¶æ„::éšè—ä¸æ˜¾ç¤ºæ§åˆ¶å°å…‰æ ‡*/
-	CONSOLE_CURSOR_INFO cursor_info;//å®šä¹‰æ§åˆ¶å°å…‰æ ‡
+	/*ÏµÍ³¼Ü¹¹::Òş²ØÓëÏÔÊ¾¿ØÖÆÌ¨¹â±ê*/
+	CONSOLE_CURSOR_INFO cursor_info;//¶¨Òå¿ØÖÆÌ¨¹â±ê
 
-	void Hide_cursor()//éšè—å…‰æ ‡
+	void Hide_cursor()//Òş²Ø¹â±ê
 	{
-		cursor_info.dwSize = 1;//å…‰æ ‡åšåº¦ä¸º1
-		cursor_info.bVisible = false;//éšè—å…‰æ ‡
-		SetConsoleCursorInfo(hStdout, &cursor_info);//ä½¿ç”¨æ ‡å‡†è¾“å‡ºä¸­è·å¾—çš„å¥æŸ„ï¼Œè®¾ç½®æ§åˆ¶å°å…‰æ ‡çŠ¶æ€
+		cursor_info.dwSize = 1;//¹â±êºñ¶ÈÎª1
+		cursor_info.bVisible = false;//Òş²Ø¹â±ê
+		SetConsoleCursorInfo(hStdout, &cursor_info);//Ê¹ÓÃ±ê×¼Êä³öÖĞ»ñµÃµÄ¾ä±ú£¬ÉèÖÃ¿ØÖÆÌ¨¹â±ê×´Ì¬
 	}
 
-	void Display_cursor()//æ˜¾ç¤ºå…‰æ ‡
+	void Display_cursor()//ÏÔÊ¾¹â±ê
 	{
-		cursor_info.dwSize = 1;//å…‰æ ‡åšåº¦ä¸º1
-		cursor_info.bVisible = true;//æ˜¾ç¤ºå…‰æ ‡
-		SetConsoleCursorInfo(hStdout, &cursor_info);//ä½¿ç”¨æ ‡å‡†è¾“å‡ºä¸­è·å¾—çš„å¥æŸ„ï¼Œè®¾ç½®æ§åˆ¶å°å…‰æ ‡çŠ¶æ€
+		cursor_info.dwSize = 1;//¹â±êºñ¶ÈÎª1
+		cursor_info.bVisible = true;//ÏÔÊ¾¹â±ê
+		SetConsoleCursorInfo(hStdout, &cursor_info);//Ê¹ÓÃ±ê×¼Êä³öÖĞ»ñµÃµÄ¾ä±ú£¬ÉèÖÃ¿ØÖÆÌ¨¹â±ê×´Ì¬
 	}
-	/*ç³»ç»Ÿæ¶æ„::éšè—ä¸æ˜¾ç¤ºæ§åˆ¶å°å…‰æ ‡ç»“æŸ*/
+	/*ÏµÍ³¼Ü¹¹::Òş²ØÓëÏÔÊ¾¿ØÖÆÌ¨¹â±ê½áÊø*/
 
-	/*ç³»ç»Ÿæ¶æ„::æš‚åœæ§åˆ¶å°è¾“å‡º*/
-	void Pause(bool style)//æš‚åœæ§åˆ¶å°è¾“å‡º
+	/*ÏµÍ³¼Ü¹¹::ÔİÍ£¿ØÖÆÌ¨Êä³ö*/
+	void Pause(bool style)//ÔİÍ£¿ØÖÆÌ¨Êä³ö
 	{
-		if (style == true)//ä¸»ç•Œé¢æ ·å¼ï¼Œå°šæ— æœºä¼šä½¿ç”¨
+		if (style == true)//Ö÷½çÃæÑùÊ½£¬ÉĞÎŞ»ú»áÊ¹ÓÃ
 		{
-			cout << "\n\n";//æ¢è¡Œä¸¤æ¬¡ï¼Œç”¨äºç¾è§‚
-			Magenta();//ç™½è‰²èƒŒæ™¯ï¼Œç´«çº¢è‰²å­—ä½“
-			cout << "\t\t\t\tè¯·æŒ‰ä»»æ„é”®ç»§ç»­ >> " << endl;//è®¾ç½®æç¤ºå­—é¢œè‰²ä¸ºç´«çº¢è‰²
-			Black();//å›åˆ°ç¼ºçœçŠ¶æ€
+			cout << "\n\n";//»»ĞĞÁ½´Î£¬ÓÃÓÚÃÀ¹Û
+			Magenta();//°×É«±³¾°£¬×ÏºìÉ«×ÖÌå
+			cout << "\t\t\t\tÇë°´ÈÎÒâ¼ü¼ÌĞø >> " << endl;//ÉèÖÃÌáÊ¾×ÖÑÕÉ«Îª×ÏºìÉ«
+			Black();//»Øµ½È±Ê¡×´Ì¬
 		}
-		else//å­ç•Œé¢æ ·å¼
+		else//×Ó½çÃæÑùÊ½
 		{
-			cout << "\n\n";//æ¢è¡Œä¸¤æ¬¡ï¼Œç”¨äºç¾è§‚
-			Black_Yellow();//é»‘è‰²èƒŒæ™¯ï¼Œé»„è‰²å­—ä½“
-			cout << "Â·è¯·æŒ‰ä»»æ„é”®ç»§ç»­ >> ";//è®¾ç½®æç¤ºå­—é¢œè‰²ä¸ºé»„è‰²
-			Black_White();//å›åˆ°å­ç•Œé¢ç¼ºçœçŠ¶æ€
+			cout << "\n\n";//»»ĞĞÁ½´Î£¬ÓÃÓÚÃÀ¹Û
+			Black_Yellow();//ºÚÉ«±³¾°£¬»ÆÉ«×ÖÌå
+			cout << "¡¤Çë°´ÈÎÒâ¼ü¼ÌĞø >> ";//ÉèÖÃÌáÊ¾×ÖÑÕÉ«Îª»ÆÉ«
+			Black_White();//»Øµ½×Ó½çÃæÈ±Ê¡×´Ì¬
 		}
-		char temp = _getch();//ä½¿ç”¨_getch()å‡½æ•°é™å€™ä»»æ„å­—ç¬¦çš„è¾“å…¥ï¼Œç»“æœå¹¶æ— å®é™…æ„ä¹‰
+		char temp = _getch();//Ê¹ÓÃ_getch()º¯Êı¾²ºòÈÎÒâ×Ö·ûµÄÊäÈë£¬½á¹û²¢ÎŞÊµ¼ÊÒâÒå£¨Çë°´ÈÎÒâ¼ü¼ÌĞø£©
 	}
-	/*ç³»ç»Ÿæ¶æ„::æš‚åœæ§åˆ¶å°è¾“å‡ºç»“æŸ*/
+	/*ÏµÍ³¼Ü¹¹::ÔİÍ£¿ØÖÆÌ¨Êä³ö½áÊø*/
 
-	/*ç³»ç»Ÿæ¶æ„::åŠ¨æ€æ˜¾ç¤ºè¾“å…¥åˆ¤æ–­å­—ç¬¦*/
-	void Input_char(bool style)//è¾“å…¥å­—ç¬¦
+	/*ÏµÍ³¼Ü¹¹::¶¯Ì¬ÏÔÊ¾ÊäÈëÅĞ¶Ï×Ö·û*/
+	void Input_char(bool style)//ÊäÈë×Ö·û
 	{
-		if (style == true)//ä¸»ç•Œé¢æ ·å¼
+		if (style == true)//Ö÷½çÃæÑùÊ½
 		{
-			cout << "\n\n";//æ¢è¡Œä¸¤æ¬¡ï¼Œæ§åˆ¶æ ¼å¼çš„ç¾è§‚
-			input_char = _getch();//è¾“å…¥å­—ç¬¦
-			Green();//ç™½è‰²èƒŒæ™¯ï¼Œç»¿è‰²å­—ä½“
+			cout << "\n\n";//»»ĞĞÁ½´Î£¬¿ØÖÆ¸ñÊ½µÄÃÀ¹Û
+			input_char = _getch();//ÊäÈë×Ö·û
+			Green();//°×É«±³¾°£¬ÂÌÉ«×ÖÌå
 			do
 			{
-				cout << "\r\t\t\t\t";//'\r'çš„åº”ç”¨ï¼Œé‡å›æœ¬è¡Œå¼€å¤´
-				if (input_char == '\015')//åˆ¤æ–­æ˜¯å¦ç­‰äºå›è½¦é”®
+				cout << "\r";//'\r'µÄÓ¦ÓÃ£¬ÖØ»Ø±¾ĞĞ¿ªÍ·
+				for (size_t i = 1; i < 80; i++)//i¾ø²»¿É=0£¬ÒòÎª»áµ¼ÖÂ»»ĞĞ
 				{
-					cout << "å½“å‰é€‰æ‹©[ å›è½¦ ]é”®";
+					cout << ' ';//¸²¸ÇBackspaceÌ«³¤ÁËµÄbug
 				}
-				else if (input_char == '\033')//åˆ¤æ–­æ˜¯å¦ç­‰äºESCé”®
+				cout << "\r\t\t\t\t";//'\r'µÄÓ¦ÓÃ£¬ÖØ»Ø±¾ĞĞ¿ªÍ·
+
+				switch (input_char)
 				{
-					cout << "å½“å‰é€‰æ‹©[ Escape ]é”®";
+				case '\015':cout << "µ±Ç°Ñ¡Ôñ[ »Ø³µ ]¼ü"; break;//ÅĞ¶ÏÊÇ·ñµÈÓÚ»Ø³µ¼ü
+				case '\033':cout << "µ±Ç°Ñ¡Ôñ[ Escape ]¼ü"; break;//ÅĞ¶ÏÊÇ·ñµÈÓÚESC¼ü
+				case '\010':cout << "µ±Ç°Ñ¡Ôñ[ Backspace ]¼ü"; break;//ÅĞ¶ÏÊÇ·ñµÈÓÚÍË¸ñ¼ü
+				default:
+					cout << "µ±Ç°Ñ¡Ôñ[ " << input_char << " ]¼ü";//ÆäËû°´¼üÖ±½ÓÊä³ö
+					break;
 				}
-				else if (input_char == '\010')//åˆ¤æ–­æ˜¯å¦ç­‰äºé€€æ ¼é”®
+				/*if (input_char == '\015')
 				{
-					cout << "å½“å‰é€‰æ‹©[ Backspace ]é”®";
+					cout << "µ±Ç°Ñ¡Ôñ[ »Ø³µ ]¼ü";
 				}
-				else//å…¶ä»–æŒ‰é”®ç›´æ¥è¾“å‡º
+				else if (input_char == '\033')
 				{
-					cout << "å½“å‰é€‰æ‹©[ " << input_char << " ]é”®";
+					cout << "µ±Ç°Ñ¡Ôñ[ Escape ]¼ü";
 				}
-				CR = _getch();//é™å€™å›è½¦é”®
-				if (CR != '\015')//è‹¥ç¬¬äºŒæ¬¡è¾“å…¥å¹¶éå›è½¦é”®
+				else if (input_char == '\010')
 				{
-					input_char = CR;//åˆ™èµ‹å€¼ç»™input_char
+					cout << "µ±Ç°Ñ¡Ôñ[ Backspace ]¼ü";
 				}
-			} while (CR != '\015');//è‹¥CR==å›è½¦é”®ï¼Œåˆ™çš†å¤§æ¬¢å–œï¼Œåœæ­¢å¾ªç¯
-			Black();//æ”¹ä¸ºç¼ºçœé»‘è‰²å­—ä½“
+				else
+				{
+					cout << "µ±Ç°Ñ¡Ôñ[ " << input_char << " ]¼ü";
+				}*/
+				CR = _getch();//¾²ºò»Ø³µ¼ü
+				if (CR != '\015')//ÈôµÚ¶ş´ÎÊäÈë²¢·Ç»Ø³µ¼ü
+				{
+					input_char = CR;//Ôò¸³Öµ¸øinput_char
+				}
+			} while (CR != '\015');//ÈôCR==»Ø³µ¼ü£¬Ôò½Ô´ó»¶Ï²£¬Í£Ö¹Ñ­»·
+			Black();//¸ÄÎªÈ±Ê¡ºÚÉ«×ÖÌå
 		}
-		else//å­ç•Œé¢æ ·å¼
+		else//×Ó½çÃæÑùÊ½
 		{
 			cout << "\n";
-			input_char = _getch();//è¾“å…¥å­—ç¬¦
-			Black_Yellow();//é»‘è‰²èƒŒæ™¯ï¼Œé»„è‰²å­—ä½“
+			input_char = _getch();//ÊäÈë×Ö·û
+			Black_Yellow();//ºÚÉ«±³¾°£¬»ÆÉ«×ÖÌå
 			do
 			{
-				cout << "\r";//'\r'çš„åº”ç”¨ï¼Œé‡å›æœ¬è¡Œå¼€å¤´
-				if (input_char == '\015')//åˆ¤æ–­æ˜¯å¦ç­‰äºå›è½¦é”®
+				cout << "\r";//'\r'µÄÓ¦ÓÃ£¬ÖØ»Ø±¾ĞĞ¿ªÍ·
+				for (size_t i = 1; i < 80; i++)
 				{
-					cout << "Â·å½“å‰é€‰æ‹©[ å›è½¦ ]é”®";
+					cout << ' ';//¸²¸ÇBackspaceÌ«³¤ÁËµÄbug
 				}
-				else if (input_char == '\033')//åˆ¤æ–­æ˜¯å¦ç­‰äºESCé”®
+				cout << "\r";
+				switch (input_char)
 				{
-					cout << "Â·å½“å‰é€‰æ‹©[ Escape ]é”®";
+				case '\015':cout << "¡¤µ±Ç°Ñ¡Ôñ[ »Ø³µ ]¼ü"; break;//ÅĞ¶ÏÊÇ·ñµÈÓÚ»Ø³µ¼ü
+				case '\033':cout << "¡¤µ±Ç°Ñ¡Ôñ[ Escape ]¼ü"; break;//ÅĞ¶ÏÊÇ·ñµÈÓÚESC¼ü
+				case '\010':cout << "¡¤µ±Ç°Ñ¡Ôñ[ Backspace ]¼ü"; break;//ÅĞ¶ÏÊÇ·ñµÈÓÚÍË¸ñ¼ü
+				default:
+					cout << "¡¤µ±Ç°Ñ¡Ôñ[ " << input_char << " ]¼ü";//ÆäËû°´¼üÖ±½ÓÊä³ö
+					break;
 				}
-				else if (input_char == '\010')//åˆ¤æ–­æ˜¯å¦ç­‰äºé€€æ ¼é”®
+				CR = _getch();//¾²ºò»Ø³µ¼ü
+				if (CR != '\015')//ÈôµÚ¶ş´ÎÊäÈë²¢·Ç»Ø³µ¼ü
 				{
-					cout << "Â·å½“å‰é€‰æ‹©[ Backspace ]é”®";
+					input_char = CR;//Ôò¸³Öµ¸øinput_char
 				}
-				else//å…¶ä»–æŒ‰é”®ç›´æ¥è¾“å‡º
-				{
-					cout << "Â·å½“å‰é€‰æ‹©[ " << input_char << " ]é”®";
-				}
-				CR = _getch();//é™å€™å›è½¦é”®
-				if (CR != '\015')//è‹¥ç¬¬äºŒæ¬¡è¾“å…¥å¹¶éå›è½¦é”®
-				{
-					input_char = CR;//åˆ™èµ‹å€¼ç»™input_char
-				}
-			} while (CR != '\015');//è‹¥CR==å›è½¦é”®ï¼Œåˆ™çš†å¤§æ¬¢å–œï¼Œåœæ­¢å¾ªç¯
-			Black_White();//æ”¹ä¸ºç¼ºçœé»‘è‰²å­—ä½“
+			} while (CR != '\015');//ÈôCR==»Ø³µ¼ü£¬Ôò½Ô´ó»¶Ï²£¬Í£Ö¹Ñ­»·
+			Black_White();//¸ÄÎªÈ±Ê¡ºÚÉ«×ÖÌå
 		}
 	}
-	/*ç³»ç»Ÿæ¶æ„::åŠ¨æ€æ˜¾ç¤ºè¾“å…¥åˆ¤æ–­å­—ç¬¦ç»“æŸ*/
+	/*ÏµÍ³¼Ü¹¹::¶¯Ì¬ÏÔÊ¾ÊäÈëÅĞ¶Ï×Ö·û½áÊø*/
 
-	/*ç³»ç»Ÿæ¶æ„::åŠ¨æ€æ˜¾ç¤ºè¾“å…¥å­—ç¬¦é”™è¯¯catch*/
-	void Error(bool style)//æç¤ºè¾“å…¥é”™è¯¯
+	/*ÏµÍ³¼Ü¹¹::¶¯Ì¬ÏÔÊ¾ÊäÈë×Ö·û´íÎócatch*/
+	void Error(bool style)//ÌáÊ¾ÊäÈë´íÎó
 	{
-		if (style == true)//ä¸»ç•Œé¢æ ·å¼
+		if (style == true)//Ö÷½çÃæÑùÊ½
 		{
-			Red();//æ”¹ä¸ºçº¢è‰²å­—ä½“
+			Window(0, 0, 80, 34);//ÉèÖÃ´°¿Ú´óĞ¡
+			Red();//¸ÄÎªºìÉ«×ÖÌå
 			cout << "\n\n\t\t";
-			if (input_char == '\015')//åˆ¤æ–­æ˜¯å¦ç­‰äºå›è½¦é”®
+			switch (input_char)
 			{
-				cout << "ã€è¾“å…¥é”™è¯¯ã€‘å€¼ä¸º[ å›è½¦ ]é”®ï¼Œè¯·é‡æ–°é€‰æ‹© >>>>>>>> " << endl;
+			case '\015':cout << "¡¾ÊäÈë´íÎó¡¿ÖµÎª[ »Ø³µ ]¼ü£¬ÇëÖØĞÂÑ¡Ôñ >>>>>>>> " << endl; break;//ÅĞ¶ÏÊÇ·ñµÈÓÚ»Ø³µ¼ü
+			case '\033':cout << "¡¾ÊäÈë´íÎó¡¿ÖµÎª[ Escape ]¼ü£¬ÇëÖØĞÂÑ¡Ôñ >>>>>>>> " << endl; break;//ÅĞ¶ÏÊÇ·ñµÈÓÚESC¼ü
+			case '\010':cout << "¡¾ÊäÈë´íÎó¡¿ÖµÎª[ Backspace ]¼ü£¬ÇëÖØĞÂÑ¡Ôñ >>>>>>>> " << endl; break;//ÅĞ¶ÏÊÇ·ñµÈÓÚÍË¸ñ¼ü
+			default://ÆäËû°´¼üÖ±½ÓÊä³ö
+				cout << "¡¾ÊäÈë´íÎó¡¿ÖµÎª[ " << input_char << " ]¼ü£¬ÇëÖØĞÂÑ¡Ôñ >>>>>>>> " << endl;
+				break;
 			}
-			else if (input_char == '\033')//åˆ¤æ–­æ˜¯å¦ç­‰äºESCé”®
+			/*if (input_char == '\015')
 			{
-				cout << "ã€è¾“å…¥é”™è¯¯ã€‘å€¼ä¸º[ Escape ]é”®ï¼Œè¯·é‡æ–°é€‰æ‹© >>>>>>>> " << endl;
+				cout << "¡¾ÊäÈë´íÎó¡¿ÖµÎª[ »Ø³µ ]¼ü£¬ÇëÖØĞÂÑ¡Ôñ >>>>>>>> " << endl;
 			}
-			else if (input_char == '\010')//åˆ¤æ–­æ˜¯å¦ç­‰äºé€€æ ¼é”®
+			else if (input_char == '\033')
 			{
-				cout << "ã€è¾“å…¥é”™è¯¯ã€‘å€¼ä¸º[ Backspace ]é”®ï¼Œè¯·é‡æ–°é€‰æ‹© >>>>>>>> " << endl;
+				cout << "¡¾ÊäÈë´íÎó¡¿ÖµÎª[ Escape ]¼ü£¬ÇëÖØĞÂÑ¡Ôñ >>>>>>>> " << endl;
 			}
-			else//å…¶ä»–æŒ‰é”®ç›´æ¥è¾“å‡º
+			else if (input_char == '\010')
 			{
-				cout << "ã€è¾“å…¥é”™è¯¯ã€‘å€¼ä¸º[ " << input_char << " ]é”®ï¼Œè¯·é‡æ–°é€‰æ‹© >>>>>>>> " << endl;
+				cout << "¡¾ÊäÈë´íÎó¡¿ÖµÎª[ Backspace ]¼ü£¬ÇëÖØĞÂÑ¡Ôñ >>>>>>>> " << endl;
 			}
-			Black();//æ”¹ä¸ºç¼ºçœé»‘è‰²å­—ä½“
-			error = false;//æœ€åå°†erroræ”¹ä¸ºç¼ºçœå€¼falseï¼Œè¡¨ç¤ºæ­¤æ¬¡çš„æç¤ºè¾“å…¥é”™è¯¯ç»“æŸ
+			else
+			{
+				cout << "¡¾ÊäÈë´íÎó¡¿ÖµÎª[ " << input_char << " ]¼ü£¬ÇëÖØĞÂÑ¡Ôñ >>>>>>>> " << endl;
+			}*/
+			Black();//¸ÄÎªÈ±Ê¡ºÚÉ«×ÖÌå
+			error = false;//×îºó½«error¸ÄÎªÈ±Ê¡Öµfalse£¬±íÊ¾´Ë´ÎµÄÌáÊ¾ÊäÈë´íÎó½áÊø
 		}
-		else//å­ç•Œé¢æ ·å¼
+		else//×Ó½çÃæÑùÊ½
 		{
-			Black_Red();//æ”¹ä¸ºé»‘è‰²èƒŒæ™¯ï¼Œçº¢è‰²å­—ä½“
+			Window(0, 0, 80, 34);
+			Black_Red();//¸ÄÎªºÚÉ«±³¾°£¬ºìÉ«×ÖÌå
 			cout << "\n";
-			if (input_char == '\015')//åˆ¤æ–­æ˜¯å¦ç­‰äºå›è½¦é”®
+			switch (input_char)
 			{
-				cout << "Â·ã€è¾“å…¥é”™è¯¯ã€‘å€¼ä¸º[ å›è½¦ ]é”®ï¼Œè¯·é‡æ–°é€‰æ‹© >> " << endl;
+			case '\015':cout << "¡¤¡¾ÊäÈë´íÎó¡¿ÖµÎª[ »Ø³µ ]¼ü£¬ÇëÖØĞÂÑ¡Ôñ >> " << endl; break;//ÅĞ¶ÏÊÇ·ñµÈÓÚ»Ø³µ¼ü
+			case '\033':cout << "¡¤¡¾ÊäÈë´íÎó¡¿ÖµÎª[ Escape ]¼ü£¬ÇëÖØĞÂÑ¡Ôñ >> " << endl; break;//ÅĞ¶ÏÊÇ·ñµÈÓÚESC¼ü
+			case '\010':cout << "¡¤¡¾ÊäÈë´íÎó¡¿ÖµÎª[ Backspace ]¼ü£¬ÇëÖØĞÂÑ¡Ôñ >> " << endl; break;//ÅĞ¶ÏÊÇ·ñµÈÓÚÍË¸ñ¼ü
+			default://ÆäËû°´¼üÖ±½ÓÊä³ö
+				cout << "¡¤¡¾ÊäÈë´íÎó¡¿ÖµÎª[ " << input_char << " ]¼ü£¬ÇëÖØĞÂÑ¡Ôñ >> " << endl;
+				break;
 			}
-			else if (input_char == '\033')//åˆ¤æ–­æ˜¯å¦ç­‰äºESCé”®
-			{
-				cout << "Â·ã€è¾“å…¥é”™è¯¯ã€‘å€¼ä¸º[ Escape ]é”®ï¼Œè¯·é‡æ–°é€‰æ‹© >> " << endl;
-			}
-			else if (input_char == '\010')//åˆ¤æ–­æ˜¯å¦ç­‰äºé€€æ ¼é”®
-			{
-				cout << "Â·ã€è¾“å…¥é”™è¯¯ã€‘å€¼ä¸º[ Backspace ]é”®ï¼Œè¯·é‡æ–°é€‰æ‹© >> " << endl;
-			}
-			else//å…¶ä»–æŒ‰é”®ç›´æ¥è¾“å‡º
-			{
-				cout << "Â·ã€è¾“å…¥é”™è¯¯ã€‘å€¼ä¸º[ " << input_char << " ]é”®ï¼Œè¯·é‡æ–°é€‰æ‹© >> " << endl;
-			}
-			Black_White();//æ”¹ä¸ºç™½è‰²å­—ä½“
-			error = false;//æœ€åå°†erroræ”¹ä¸ºç¼ºçœå€¼falseï¼Œè¡¨ç¤ºæ­¤æ¬¡çš„æç¤ºè¾“å…¥é”™è¯¯ç»“æŸ
+			Black_White();//¸ÄÎª°×É«×ÖÌå
+			error = false;//×îºó½«error¸ÄÎªÈ±Ê¡Öµfalse£¬±íÊ¾´Ë´ÎµÄÌáÊ¾ÊäÈë´íÎó½áÊø
 		}
 	}
-	/*ç³»ç»Ÿæ¶æ„::åŠ¨æ€æ˜¾ç¤ºè¾“å…¥å­—ç¬¦é”™è¯¯catchç»“æŸ*/
+	/*ÏµÍ³¼Ü¹¹::¶¯Ì¬ÏÔÊ¾ÊäÈë×Ö·û´íÎócatch½áÊø*/
 
-	~Framework()//ææ„å‡½æ•°
+	~Framework()//Îö¹¹º¯Êı
 	{
-		CloseHandle(hStdout);//å…³é—­æ ‡å‡†è¾“å‡ºå¥æŸ„
+		CloseHandle(hStdout);//¹Ø±Õ±ê×¼Êä³ö¾ä±ú
 	}
 };
-/*===================å°è£…ç³»ç»Ÿæ¶æ„ç±»ç»“æŸ===================*/
+/*===================·â×°ÏµÍ³¼Ü¹¹Àà½áÊø===================*/
 
 
-/*ç³»ç»Ÿæ¶æ„::æ•°æ®å­˜å‚¨*/
-int M(0);//è¯¾ç¨‹æ•°ç›®
-/*æ•°æ®ç±»*/
-class Data//æ•°æ®ç±»ï¼Œç”¨äºå­˜æ”¾æ•°æ®
+/*ÏµÍ³¼Ü¹¹::Êı¾İ´æ´¢*/
+int M(0);//¿Î³ÌÊıÄ¿
+/*Êı¾İÀà*/
+class Data//Êı¾İÀà£¬ÓÃÓÚ´æ·ÅÊı¾İ
 {
-private://ç§æœ‰æˆå‘˜æš‚æ— 
+private://Ë½ÓĞ³ÉÔ±ÔİÎŞ
 
-protected://ä¿æŠ¤æˆå‘˜æš‚æ— 
+protected://±£»¤³ÉÔ±ÔİÎŞ
 
-public://å…¬æœ‰æˆå‘˜
+public://¹«ÓĞ³ÉÔ±
 
-	string number;//å­¦å·ï¼Œåƒä¸‡ä¸è¦èµ‹å€¼ä¸ºNULLï¼Œå¦åˆ™ç”³è¯·å†…å­˜å‡ºç°crashï¼ˆå´©æºƒï¼‰
-	string name;//å§“åï¼Œåƒä¸‡ä¸è¦èµ‹å€¼ä¸ºNULLï¼Œå¦åˆ™ç”³è¯·å†…å­˜å‡ºç°crashï¼ˆå´©æºƒï¼‰
-	double* score = new double[M];//å•ç§‘æˆç»©ï¼Œç±»ä¸­åŠ¨æ€ç”³è¯·å†…å­˜ï¼Œæ˜“é€ æˆcrashï¼ˆå´©æºƒï¼‰ï¼Œéœ€è¦é‡è½½èµ‹å€¼è¿ç®—ç¬¦
-	double average = 0.0;//è®¡ç®—å­¦ç”Ÿçš„å¹³å‡æˆç»©
-	bool delete_mark = false;//åˆ é™¤æ ‡è®°
+	string number;//Ñ§ºÅ£¬Ç§Íò²»Òª¸³ÖµÎªNULL£¬·ñÔòÉêÇëÄÚ´æ³öÏÖcrash£¨±ÀÀ££©
+	string name;//ĞÕÃû£¬Ç§Íò²»Òª¸³ÖµÎªNULL£¬·ñÔòÉêÇëÄÚ´æ³öÏÖcrash£¨±ÀÀ££©
+	double* score = new double[M];//µ¥¿Æ³É¼¨£¬ÀàÖĞ¶¯Ì¬ÉêÇëÄÚ´æ£¬Ò×Ôì³Écrash£¨±ÀÀ££©£¬ĞèÒªÖØÔØ¸³ÖµÔËËã·û£¨±¾ÏëÓÃSTL£¬ÖÖÖÖÔ­ÒòÎ´ÄÜÊ©ĞĞ£¬Ö»ºÃÊÖ¶¯£©
+	double average = 0.0;//¼ÆËãÑ§ÉúµÄÆ½¾ù³É¼¨
+	bool delete_mark = false;//É¾³ı±ê¼Ç
 
-	/*å› ä¸ºç±»ä¸­æœ‰æŒ‡é’ˆå˜é‡ï¼Œæ— æ³•ç›´æ¥èµ‹å€¼ï¼Œå¿…é¡»é‡è½½èµ‹å€¼è¿ç®—ç¬¦ï¼Œå¦åˆ™ä¼šé€ æˆcrashï¼ˆå´©æºƒï¼‰*/
-	Data& operator = (const Data& Copy)//é‡è½½èµ‹å€¼è¿ç®—ç¬¦
+	/*ÒòÎªÀàÖĞÓĞÖ¸Õë±äÁ¿£¬ÎŞ·¨Ö±½Ó¸³Öµ£¬±ØĞëÖØÔØ¸³ÖµÔËËã·û£¬·ñÔò»áÔì³Écrash£¨±ÀÀ££©*/
+	Data& operator = (const Data& Copy)//ÖØÔØ¸³ÖµÔËËã·û
 	{
-		number = Copy.number;//æ­£å¸¸å¤åˆ¶å¸¸è§„æˆå‘˜
-		name = Copy.name;//æ­£å¸¸å¤åˆ¶å¸¸è§„æˆå‘˜
-		average = Copy.average;//æ­£å¸¸å¤åˆ¶å¸¸è§„æˆå‘˜
+		number = Copy.number;//Õı³£¸´ÖÆ³£¹æ³ÉÔ±
+		name = Copy.name;//Õı³£¸´ÖÆ³£¹æ³ÉÔ±
+		average = Copy.average;//Õı³£¸´ÖÆ³£¹æ³ÉÔ±
 
-		double* temp = new double[M];//å¤åˆ¶æŒ‡é’ˆæŒ‡å‘çš„å†…å®¹
-		memcpy(temp, Copy.score, M * sizeof(double));//è°ƒç”¨å†…å­˜æ‹·è´å‡½æ•°
+		double* temp = new double[M];//¸´ÖÆÖ¸ÕëÖ¸ÏòµÄÄÚÈİ
+		memcpy(temp, Copy.score, M * sizeof(double));//µ÷ÓÃÄÚ´æ¿½±´º¯Êı
 
-		delete[] score;//åˆ é™¤åŸæŒ‡é’ˆæŒ‡å‘çš„å†…å®¹
-		score = temp;//å»ºç«‹æ–°æŒ‡å‘
-		return *this;//thisæŒ‡é’ˆè¿”å›å½“å‰å¯¹è±¡çš„å¼•ç”¨
+		delete[] score;//É¾³ıÔ­Ö¸ÕëÖ¸ÏòµÄÄÚÈİ
+		score = temp;//½¨Á¢ĞÂÖ¸Ïò
+		return *this;//thisÖ¸Õë·µ»Øµ±Ç°¶ÔÏóµÄÒıÓÃ
 	}
-	/*é‡è½½èµ‹å€¼è¿ç®—ç¬¦ç»“æŸï¼Œä¿®å¤æ’åºæ—¶äº¤æ¢çš„crashï¼ˆå´©æºƒï¼‰*/
+	/*ÖØÔØ¸³ÖµÔËËã·û½áÊø£¬ĞŞ¸´ÅÅĞòÊ±½»»»µÄcrash£¨±ÀÀ££©*/
 
-	/*æœ¬æƒ³ä¸ºé¿å…å†æ¬¡å‡ºç°ä¸¥é‡æ¼æ´ï¼Œé¡ºä¾¿ç¼–å†™æ‹·è´æ„é€ å‡½æ•°ï¼Œä¸æˆæƒ³ç¼–è¯‘å‡ºé”™ï¼šä¸å­˜åœ¨é»˜è®¤æ„é€ å‡½æ•°ï¼Œæ— æ³•åŠ¨æ€ç”³è¯·å†…å­˜å®šä¹‰ç±»ï¼Œæ•…æ­¤ä½œç½¢
-	Data(const Data& Copy)//æ‹·è´æ„é€ å‡½æ•°
+	/*±¾ÏëÎª±ÜÃâÔÙ´Î³öÏÖÑÏÖØÂ©¶´£¬Ë³±ã±àĞ´¿½±´¹¹Ôìº¯Êı£¬²»³ÉÏë±àÒë³ö´í£º²»´æÔÚÄ¬ÈÏ¹¹Ôìº¯Êı£¬ÎŞ·¨¶¯Ì¬ÉêÇëÄÚ´æ¶¨ÒåÀà£¬¹Ê´Ë×÷°Õ
+	Data(const Data& Copy)//¿½±´¹¹Ôìº¯Êı
 	{
-		number = Copy.number;//å¤åˆ¶å¸¸è§„æˆå‘˜
-		name = Copy.name//å¤åˆ¶å¸¸è§„æˆå‘˜
-		average = Copy.average//å¤åˆ¶å¸¸è§„æˆå‘˜
+		number = Copy.number;//¸´ÖÆ³£¹æ³ÉÔ±
+		name = Copy.name//¸´ÖÆ³£¹æ³ÉÔ±
+		average = Copy.average//¸´ÖÆ³£¹æ³ÉÔ±
 
-		score= new double[M];//å¤åˆ¶æŒ‡é’ˆæŒ‡å‘çš„å†…å®¹
-		memcpy(score, Copy.score, M * sizeof(double));//è°ƒç”¨å†…å­˜æ‹·è´å‡½æ•°
+		score= new double[M];//¸´ÖÆÖ¸ÕëÖ¸ÏòµÄÄÚÈİ
+		memcpy(score, Copy.score, M * sizeof(double));//µ÷ÓÃÄÚ´æ¿½±´º¯Êı
 	}
-	//æ‹·è´æ„é€ å‡½æ•°ç»“æŸ*/
+	//¿½±´¹¹Ôìº¯Êı½áÊø*/
 
-	~Data()//ææ„å‡½æ•°ï¼Œé‡Šæ”¾ç”³è¯·çš„å†…å­˜
+	~Data()//Îö¹¹º¯Êı£¬ÊÍ·ÅÉêÇëµÄÄÚ´æ
 	{
 		delete[] score;
 	}
 
 };
-/*ç³»ç»Ÿæ¶æ„::æ•°æ®å­˜å‚¨ç»“æŸ*/
+/*ÏµÍ³¼Ü¹¹::Êı¾İ´æ´¢½áÊø*/
 
 
-/*===================å°è£…åŠŸèƒ½æ¨¡å—ç±»ï¼Œå…¬æœ‰ç»§æ‰¿ç³»ç»Ÿæ¶æ„ç±»===================*/
+/*===================·â×°¹¦ÄÜÄ£¿éÀà£¬¹«ÓĞ¼Ì³ĞÏµÍ³¼Ü¹¹Àà===================*/
 class Modular :public Framework
 {
-private://ç§æœ‰æˆå‘˜
+private://Ë½ÓĞ³ÉÔ±
 
-	int count = 0, inside = 0;//ç”¨ä»¥å¾ªç¯ä¹‹ä¸­è®¡æ•°
-	Data swap;//å®šä¹‰äº¤æ¢æ•°å€¼çš„ç±»
+	int count = 0, inside = 0;//ÓÃÒÔÑ­»·Ö®ÖĞ¼ÆÊı
+	Data swap;//¶¨Òå½»»»ÊıÖµµÄÀà
 
-protected://ä¿æŠ¤æˆå‘˜
+protected://±£»¤³ÉÔ±
 
-	int N = 0;//å­¦ç”Ÿæ•°ç›®
-	int N_search = 0;//ç”¨äºæœç´¢å·²åˆ é™¤çš„æ•°æ®ï¼Œå³å­¦ç”Ÿçš„å®Œæ•´æ•°ç›®
-	string* subject = NULL;//å®šä¹‰stringç±»æŒ‡é’ˆï¼Œè¯¾ç¨‹åç§°
-	Data* data = NULL;//å®šä¹‰dataç±»æŒ‡é’ˆï¼Œå­¦ç”Ÿæ•°æ®
+	int N = 0;//Ñ§ÉúÊıÄ¿
+	int N_search = 0;//ÓÃÓÚËÑË÷ÒÑÉ¾³ıµÄÊı¾İ£¬¼´Ñ§ÉúµÄÍêÕûÊıÄ¿
+	string* subject = NULL;//¶¨ÒåstringÀàÖ¸Õë£¬¿Î³ÌÃû³Æ
+	Data* data = NULL;//¶¨ÒådataÀàÖ¸Õë£¬Ñ§ÉúÊı¾İ
 
-public://å…¬æœ‰æˆå‘˜
+public://¹«ÓĞ³ÉÔ±
 
-	~Modular()//ææ„å‡½æ•°ï¼Œé‡Šæ”¾ç”³è¯·çš„å†…å­˜
+	~Modular()//Îö¹¹º¯Êı£¬ÊÍ·ÅÉêÇëµÄÄÚ´æ
 	{
 		delete[]subject;
 		delete[]data;
 	}
 
-	/*æ¨¡å—1::æˆç»©è¾“å…¥*/
-	void Input()//æˆç»©å½•å…¥
+	/*Ä£¿é1::³É¼¨ÊäÈë*/
+	void Input()//³É¼¨Â¼Èë
 	{
-		Title(TEXT("å­¦ç”Ÿæˆç»©ç®¡ç†ç³»ç»Ÿ::æˆç»©å½•å…¥"));//è®¾ç½®æ ‡é¢˜
-		Window(0, 0, 64, 34);//è®¾ç½®çª—å£å¤§å°ä¸º64è¡Œ34åˆ—
-		Black_White();//æ›´æ–°å‰æ™¯è‰²ã€èƒŒæ™¯è‰²
-		Cls();//æ¸…å±
-		if ((data != NULL) || (subject != NULL))//è‹¥ä¸ä¸ºç©ºï¼Œè¯´æ˜å·²ç»å½•å…¥æ•°æ®
+		Title(TEXT("Ñ§Éú³É¼¨¹ÜÀíÏµÍ³::³É¼¨Â¼Èë"));//ÉèÖÃ±êÌâ
+		Window(0, 0, 80, 34);//ÉèÖÃ´°¿Ú´óĞ¡Îª80ĞĞ34ÁĞ£¨·ÏÆúÔ­À´64ĞĞµÄÉè¶¨£¬ÍêÈ«Ã»±ØÒª£©
+		Black_White();//¸üĞÂÇ°¾°É«¡¢±³¾°É«
+		Cls();//ÇåÆÁ
+		if ((data != NULL) || (subject != NULL))//Èô²»Îª¿Õ£¬ËµÃ÷ÒÑ¾­Â¼ÈëÊı¾İ
 		{
-			if (IDCANCEL == MessageBox(GetConsoleWindow(), TEXT("æ£€æµ‹åˆ°æ•°æ®åº“ä¸­å·²å­˜åœ¨æ•°æ®ï¼Œç¡®å®šé‡æ–°å½•å…¥æ•°æ®å—ï¼Ÿ"), TEXT("æç¤ºä¿¡æ¯"), MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2))
+			if (IDCANCEL == MessageBox(GetConsoleWindow(), TEXT("¼ì²âµ½Êı¾İ¿âÖĞÒÑ´æÔÚÊı¾İ£¬È·¶¨ÖØĞÂÂ¼ÈëÊı¾İÂğ£¿"), TEXT("ÌáÊ¾ĞÅÏ¢"), MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2))
 			{
-				//è°ƒç”¨Windows APIå¼¹å‡ºå¯¹è¯æ¡†ï¼Œç¼ºçœå€¼ä¸ºå–æ¶ˆ
-				Window(0, 0, 80, 34);//å¿…é¡»é‡æ–°è°ƒæ•´çª—å£ï¼Œå¦åˆ™å‡ºç°bug
-				return;//è‹¥å€¼ä¸ºå–æ¶ˆï¼Œåˆ™æ­¤å‡½æ•°è°ƒç”¨ç»“æŸ
+				//µ÷ÓÃWindows APIµ¯³ö¶Ô»°¿ò£¬È±Ê¡ÖµÎªÈ¡Ïû
+				Window(0, 0, 80, 34);//±ØĞëÖØĞÂµ÷Õû´°¿Ú£¬·ñÔò³öÏÖbug
+				return;//ÈôÖµÎªÈ¡Ïû£¬Ôò´Ëº¯Êıµ÷ÓÃ½áÊø
 			}
 		}
-		Display_cursor();//æ˜¾ç¤ºå…‰æ ‡
-		do
+		Display_cursor();//ÏÔÊ¾¹â±ê
+		//do
+		//{
+		Cls();//ÇåÆÁ
+		cout << "\n¡¤ÇëÊäÈëÑ§ÉúµÄÈËÊı£º";
+		cin >> N;//Â¼ÈëÑ§ÉúÈËÊı
+		cin.clear();//ĞŞÕıÊäÈë×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©£¬¸ÄÕı´íÎó±êÊ¶
+		cin.ignore(1024, '\n');//ĞŞÕıÊäÈë×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©£¬Çå¿ÕÊäÈëÁ÷
+		cout << "\n¡¤ÇëÊäÈë¿Î³ÌµÄÃÅÊı£º";
+		cin >> M;//Â¼Èë¿Î³ÌÃÅÊı
+		cin.clear();//ĞŞÕıÊäÈë×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©£¬¸ÄÕı´íÎó±êÊ¶
+		cin.ignore(1024, '\n');//ĞŞÕıÊäÈë×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©£¬Çå¿ÕÊäÈëÁ÷
+		if (N <= 0 || M <= 0)//Èç¹ûN»òM¶¼Ğ¡ÓÚµÈÓÚ0£¬catchÊäÈë´íÎó
 		{
-			Cls();//æ¸…å±
-			cout << "\nÂ·è¯·è¾“å…¥å­¦ç”Ÿçš„äººæ•°ï¼š";
-			cin >> N;//å½•å…¥å­¦ç”Ÿäººæ•°
-			cin.clear();//ä¿®æ­£è¾“å…¥å­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰ï¼Œæ”¹æ­£é”™è¯¯æ ‡è¯†
-			cin.ignore(1024, '\n');//ä¿®æ­£è¾“å…¥å­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰ï¼Œæ¸…ç©ºè¾“å…¥æµ
-			cout << "\nÂ·è¯·è¾“å…¥è¯¾ç¨‹çš„é—¨æ•°ï¼š";
-			cin >> M;//å½•å…¥è¯¾ç¨‹é—¨æ•°
-			cin.clear();//ä¿®æ­£è¾“å…¥å­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰ï¼Œæ”¹æ­£é”™è¯¯æ ‡è¯†
-			cin.ignore(1024, '\n');//ä¿®æ­£è¾“å…¥å­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰ï¼Œæ¸…ç©ºè¾“å…¥æµ
-			if (N <= 0 || M <= 0)//å¦‚æœNæˆ–Méƒ½å°äºç­‰äº0ï¼Œcatchè¾“å…¥é”™è¯¯
-			{
-				Black_Red();//é»‘è‰²èƒŒæ™¯ï¼Œçº¢è‰²å­—ä½“
-				cout << "\nã€è¾“å…¥é”™è¯¯ã€‘æ•°å€¼ä¸èƒ½å°äºæˆ–ç­‰äº0ï¼Œè¯·é‡æ–°è¾“å…¥" << endl;
-				Black_White();//é»‘è‰²èƒŒæ™¯ï¼Œç™½è‰²å­—ä½“
-				Pause(false);//æš‚åœå±å¹•è¾“å‡º
-			}
-		} while (N <= 0 || M <= 0);//å¦‚æœNæˆ–Méƒ½å°äºç­‰äº0ï¼Œç»§ç»­å¾ªç¯
-		N_search = N;//ç”¨äºæœç´¢å·²åˆ é™¤çš„æ•°æ®ï¼Œå³ä¿å­˜å®Œæ•´çš„å­¦ç”Ÿäººæ•°
-		delete[]subject;//è§„é¿å†…å­˜æ³„æ¼ï¼Œå¤šæ¬¡è°ƒç”¨å‡½æ•°æ—¶ï¼Œå…ˆæŠŠä»¥å‰çš„å†…å­˜ç©ºé—´é‡Šæ”¾æ‰
-		delete[]data;//è§„é¿å†…å­˜æ³„æ¼ï¼Œå¤šæ¬¡è°ƒç”¨å‡½æ•°æ—¶ï¼Œå…ˆæŠŠä»¥å‰çš„å†…å­˜ç©ºé—´é‡Šæ”¾æ‰
-		data = new Data[N];//åŠ¨æ€ç”³è¯·å†…å­˜
-		subject = new string[M];//åŠ¨æ€ç”³è¯·å†…å­˜
-		Cls();//æ¸…å±
-		for (count = 0; count < M; count++)
-		{
-			cout << "\nÂ·è¯·è¾“å…¥ç¬¬[ " << count + 1 << " ]é—¨è¯¾çš„åç§°ï¼š";
-			cin >> *(subject + count);//æŒ‡é’ˆè¾“å‡ºstringç±»çš„è¯¾ç¨‹åç§°
+			Black_Red();//ºÚÉ«±³¾°£¬ºìÉ«×ÖÌå
+			cout << "\n¡¾ÊäÈë´íÎó¡¿ÊıÖµ²»ÄÜĞ¡ÓÚ»òµÈÓÚ0" << endl;
+			Black_White();//ºÚÉ«±³¾°£¬°×É«×ÖÌå
+			Pause(false);//ÔİÍ£ÆÁÄ»Êä³ö
+			return;//Ö±½Ó·µ»Ø
 		}
-		Cls();//æ¸…å±
+		//} while (N <= 0 || M <= 0);//Èç¹ûN»òM¶¼Ğ¡ÓÚµÈÓÚ0£¬¼ÌĞøÑ­»·
+		N_search = N;//ÓÃÓÚËÑË÷ÒÑÉ¾³ıµÄÊı¾İ£¬¼´±£´æÍêÕûµÄÑ§ÉúÈËÊı
+		delete[]subject;//¹æ±ÜÄÚ´æĞ¹Â©£¬¶à´Îµ÷ÓÃº¯ÊıÊ±£¬ÏÈ°ÑÒÔÇ°µÄÄÚ´æ¿Õ¼äÊÍ·Åµô
+		delete[]data;//¹æ±ÜÄÚ´æĞ¹Â©£¬¶à´Îµ÷ÓÃº¯ÊıÊ±£¬ÏÈ°ÑÒÔÇ°µÄÄÚ´æ¿Õ¼äÊÍ·Åµô
+		data = new Data[N];//¶¯Ì¬ÉêÇëÄÚ´æ
+		subject = new string[M];//¶¯Ì¬ÉêÇëÄÚ´æ
+		Cls();//ÇåÆÁ
+		for (count = 0; count < M; count++)//´Ë´¦ÓÃSTLµÄ»°»áºÃ°ìºÜ¶à£¬¾Í²»±ØÏÈÈ·¶¨ÈËÊıÁË£¬¿ÉÏ§ÎÒÀÁµÃ¸Ä
+		{
+			cout << "\n¡¤ÇëÊäÈëµÚ[ " << count + 1 << " ]ÃÅ¿ÎµÄÃû³Æ£º";
+			cin >> *(subject + count);//Ö¸ÕëÊä³östringÀàµÄ¿Î³ÌÃû³Æ
+		}
+		Cls();//ÇåÆÁ
 		for (count = 0; count < N; count++)
 		{
-			cout << "\nÂ·è¯·è¾“å…¥ç¬¬[ " << count + 1 << " ]ä½å­¦ç”Ÿçš„ >> " << endl;
-			cout << "\n  å­¦å·ï¼š";
-			cin >> (data + count)->number;//è¾“å…¥å­¦å·
-			cout << "\n  å§“åï¼š";
-			cin >> (data + count)->name;//è¾“å…¥å§“å
-			for (inside = 0; inside < M; inside++)//å†…å±‚å¾ªç¯ï¼Œè¾“å…¥æˆç»©
+			cout << "\n¡¤ÇëÊäÈëµÚ[ " << count + 1 << " ]Î»Ñ§ÉúµÄ >> " << endl;
+			cout << "\n  Ñ§ºÅ£º";
+			cin >> (data + count)->number;//ÊäÈëÑ§ºÅ
+			cout << "\n  ĞÕÃû£º";
+			cin >> (data + count)->name;//ÊäÈëĞÕÃû
+			for (inside = 0; inside < M; inside++)//ÄÚ²ãÑ­»·£¬ÊäÈë³É¼¨
 			{
 				cout << "\n";
 				do
 				{
-					cout << "  è¯¾ç¨‹ã€" << *(subject + inside) << "ã€‘çš„æˆç»©ï¼š";
-					cin >> (data + count)->score[inside];//è¾“å…¥æˆç»©
-					cin.clear();//ä¿®æ­£è¾“å…¥å­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰ï¼Œæ”¹æ­£é”™è¯¯æ ‡è¯†
-					cin.ignore(1024, '\n');//ä¿®æ­£è¾“å…¥å­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰ï¼Œæ¸…ç©ºè¾“å…¥æµ
-					if ((data + count)->score[inside] < 0)//catché”™è¯¯è¾“å…¥
+					cout << "  ¿Î³Ì¡¾" << *(subject + inside) << "¡¿µÄ³É¼¨£º";
+					cin >> (data + count)->score[inside];//ÊäÈë³É¼¨
+					cin.clear();//ĞŞÕıÊäÈë×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©£¬¸ÄÕı´íÎó±êÊ¶
+					cin.ignore(1024, '\n');//ĞŞÕıÊäÈë×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©£¬Çå¿ÕÊäÈëÁ÷
+					if ((data + count)->score[inside] < 0)//catch´íÎóÊäÈë
 					{
-						cout << "  ã€æˆç»©ä¸èƒ½å°äº0ã€‘" << endl;
+						cout << "  ¡¾³É¼¨²»ÄÜĞ¡ÓÚ0¡¿" << endl;
 					}
-				} while ((data + count)->score[inside] < 0);//å¿…é¡»æ­£ç¡®è¾“å…¥ï¼Œæ‰å¯ä»¥è·³å‡ºå¾ªç¯
-				(data + count)->average += (data + count)->score[inside];//è®¡ç®—å­¦ç”Ÿçš„æˆç»©æ€»å’Œ
+				} while ((data + count)->score[inside] < 0);//±ØĞëÕıÈ·ÊäÈë£¬²Å¿ÉÒÔÌø³öÑ­»·
+				(data + count)->average += (data + count)->score[inside];//¼ÆËãÑ§ÉúµÄ³É¼¨×ÜºÍ
 			}
-			(data + count)->average /= (double)(M);//è®¡ç®—å­¦ç”Ÿçš„å¹³å‡æˆç»©
-			Cls();//æ¸…å±
+			(data + count)->average /= (double)(M);//¼ÆËãÑ§ÉúµÄÆ½¾ù³É¼¨
+			Cls();//ÇåÆÁ
 		}
-		Window(0, 0, 80, 34);//é¡»é‡æ–°è®¾ç½®çª—å£å¤§å°
+		Window(0, 0, 80, 34);//ĞëÖØĞÂÉèÖÃ´°¿Ú´óĞ¡
 	}
-	/*æ¨¡å—1::æˆç»©è¾“å…¥ç»“æŸ*/
+	/*Ä£¿é1::³É¼¨ÊäÈë½áÊø*/
 
-	/*æ¨¡å—2::æˆç»©æ˜¾ç¤º*/
-	void Output()//æˆç»©æ˜¾ç¤ºï¼Œåˆ©ç”¨ç¼“å†²åŒº9000è¡Œçš„ä¼˜åŠ¿ï¼Œé‡‡ç”¨ç«–æ’å…¨éƒ¨è¾“å‡º
+	/*Ä£¿é2::³É¼¨ÏÔÊ¾*/
+	void Output()//³É¼¨ÏÔÊ¾£¬ÀûÓÃ»º³åÇø9000ĞĞµÄÓÅÊÆ£¬²ÉÓÃÊúÅÅÈ«²¿Êä³ö
 	{
-		Title(TEXT("å­¦ç”Ÿæˆç»©ç®¡ç†ç³»ç»Ÿ::æˆç»©æ˜¾ç¤º"));//è®¾ç½®æ ‡é¢˜
-		Window(0, 0, 64, 34);//è®¾ç½®çª—å£å¤§å°ä¸º64åˆ—34è¡Œ
-		Black_White();//æ›´æ–°å‰æ™¯è‰²ã€èƒŒæ™¯è‰²
-		Cls();//æ¸…å±
-		Display_cursor();//æ˜¾ç¤ºå…‰æ ‡
-		if (data == NULL || subject == NULL)//å¦‚æœæŒ‡é’ˆä¸ºç©ºï¼Œä»£è¡¨æ²¡æœ‰å½•å…¥æˆç»©
+		Title(TEXT("Ñ§Éú³É¼¨¹ÜÀíÏµÍ³::³É¼¨ÏÔÊ¾"));//ÉèÖÃ±êÌâ
+		Window(0, 0, 80, 34);//ÉèÖÃ´°¿Ú´óĞ¡Îª80ÁĞ34ĞĞ
+		Black_White();//¸üĞÂÇ°¾°É«¡¢±³¾°É«
+		Cls();//ÇåÆÁ
+		Display_cursor();//ÏÔÊ¾¹â±ê
+		if (data == NULL || subject == NULL)//Èç¹ûÖ¸ÕëÎª¿Õ£¬´ú±íÃ»ÓĞÂ¼Èë³É¼¨
 		{
-			cout << "\nÂ·å°šæœªå½•å…¥å­¦ç”Ÿæ•°æ®ï¼Œå³å°†è¿”å›ä¸»èœå•..." << endl;
-			Pause(false);//æš‚åœå±å¹•è¾“å‡º
+			cout << "\n¡¤ÉĞÎ´Â¼ÈëÑ§ÉúÊı¾İ£¬¼´½«·µ»ØÖ÷²Ëµ¥..." << endl;
+			Pause(false);//ÔİÍ£ÆÁÄ»Êä³ö
+			return;
 		}
-		else//å¦åˆ™ï¼Œä¾¿æ˜¯å·²ç»å½•å…¥æˆç»©
+		//·ñÔò£¬±ãÊÇÒÑ¾­Â¼Èë³É¼¨
+
+		if (N != 0)//NÈôÎª0ÔòÊı¾İÒÑ¾­È«²¿±»±ê¼ÇÉ¾³ı
 		{
-			if (N != 0)//Nè‹¥ä¸º0åˆ™æ•°æ®å·²ç»å…¨éƒ¨è¢«æ ‡è®°åˆ é™¤
+			for (count = 0; count < N; count++)//Íâ²ãÑ­»·±éÀúÑ§ÉúÊä³ö
 			{
-				for (count = 0; count < N; count++)//å¤–å±‚å¾ªç¯éå†å­¦ç”Ÿè¾“å‡º
+				cout << "\n¡¤ĞòºÅÎª[ " << count + 1 << " ]µÄÑ§ÉúµÄ >> " << endl;
+				cout << "\n  Ñ§ºÅ£º" << (data + count)->number << endl;//Êä³öÑ§ºÅ
+				cout << "\n  ĞÕÃû£º" << (data + count)->name << endl;//Êä³öĞÕÃû
+				for (inside = 0; inside < M; inside++)//ÄÚ²ãÑ­»·±éÀú¿Î³ÌÊä³ö
 				{
-					cout << "\nÂ·åºå·ä¸º[ " << count + 1 << " ]çš„å­¦ç”Ÿçš„ >> " << endl;
-					cout << "\n  å­¦å·ï¼š" << (data + count)->number << endl;//è¾“å‡ºå­¦å·
-					cout << "\n  å§“åï¼š" << (data + count)->name << endl;//è¾“å‡ºå§“å
-					for (inside = 0; inside < M; inside++)//å†…å±‚å¾ªç¯éå†è¯¾ç¨‹è¾“å‡º
-					{
-						cout << "\n  è¯¾ç¨‹ã€" << *(subject + inside) << "ã€‘çš„æˆç»©ï¼š" << (data + count)->score[inside] << endl;//è¾“å‡ºæˆç»©
-					}
-					cout << "\n  å¹³å‡æˆç»©ï¼š" << (data + count)->average << endl;//è¾“å‡ºå¹³å‡æˆç»©
+					cout << "\n  ¿Î³Ì¡¾" << *(subject + inside) << "¡¿µÄ³É¼¨£º" << (data + count)->score[inside] << endl;//Êä³ö³É¼¨
 				}
+				cout << "\n  Æ½¾ù³É¼¨£º" << (data + count)->average << endl;//Êä³öÆ½¾ù³É¼¨
 			}
-			else
-			{
-				cout << "\nÂ·æ•°æ®å·²å…¨éƒ¨æ ‡è®°ä¸ºåˆ é™¤" << endl;
-			}
-			Pause(false);//æš‚åœå±å¹•è¾“å‡º//æš‚åœæ˜¾ç¤ºä»¥ç­‰å¾…ä¸‹ä¸€æ­¥æ“ä½œ
-		}
-		Window(0, 0, 80, 34);//é¡»é‡æ–°è®¾ç½®çª—å£å¤§å°
-	}
-	/*æ¨¡å—2::æˆç»©æ˜¾ç¤ºç»“æŸ*/
-
-	/*æ¨¡å—3::æˆç»©æ’åº*/
-	void Sort()//æˆç»©æ’åº
-	{
-		Title(TEXT("å­¦ç”Ÿæˆç»©ç®¡ç†ç³»ç»Ÿ::æˆç»©æ’åº"));//è®¾ç½®æ ‡é¢˜
-		Window(0, 0, 64, 34);//è®¾ç½®çª—å£å¤§å°ä¸º64è¡Œ34åˆ—
-		Black_White();//æ›´æ–°å‰æ™¯è‰²ã€èƒŒæ™¯è‰²
-		Cls();//æ¸…å±
-		Display_cursor();//æ˜¾ç¤ºå…‰æ ‡
-		if (data == NULL || subject == NULL)//æŒ‡é’ˆä¸ºç©ºï¼Œå°šæœªå½•å…¥
-		{
-			cout << "\nÂ·å°šæœªå½•å…¥å­¦ç”Ÿæ•°æ®ï¼Œå³å°†è¿”å›ä¸»èœå•..." << endl;
-			Pause(false);//æš‚åœå±å¹•è¾“å‡º
 		}
 		else
 		{
-			Hide_cursor();//éšè—å…‰æ ‡
-			do//do-whileå¾ªç¯ï¼Œå…ˆæ‰§è¡Œä¸€æ¬¡
-			{
-				Black_White();//é»‘è‰²èƒŒæ™¯ï¼Œç™½è‰²å­—ä½“
-				Cls();//æ¸…å±
-				cout << "\nÂ·è¯·é€‰æ‹©æ’åºæ–¹å¼ï¼š" << endl;
-				cout << "\n\tã€uã€‘å‡åº" << endl;
-				cout << "\n\tã€dã€‘é™åº" << endl;
-				cout << "\n\tã€rã€‘è¿”å›ä¸»ç•Œé¢" << endl;
-				cout << "\n\tã€qã€‘é€€å‡ºç³»ç»Ÿ" << endl;
-				if (error == true)//catché”™è¯¯ï¼Œè°ƒç”¨å‡½æ•°
-				{
-					Error(false);//è°ƒç”¨Errorå‡½æ•°
-				}
-				Input_char(false);//è¾“å…¥å­—ç¬¦
-				switch (input_char)//åˆ¤æ–­è¾“å…¥çš„å­—ç¬¦
-				{
-				case 'u':break;//ä¸ºuåˆ™è·³å‡ºswitchè¯­å¥
-				case 'd':break;//ä¸ºdåˆ™è·³å‡ºswitchè¯­å¥
-				case 'r':Window(0, 0, 80, 34); return; break;//ç›´æ¥ç»“æŸå‡½æ•°è°ƒç”¨ï¼Œè¿”å›ä¸»ç•Œé¢ï¼Œè¿”å›ä¹‹å‰é¡»é‡æ–°è®¾ç½®çª—å£å¤§å°
-				case 'q':exit(0); break;//qåˆ™ç›´æ¥é€€å‡ºç³»ç»Ÿï¼Œè¿”å›å€¼0
-				default: error = true;//å¦åˆ™ï¼Œè¾“å…¥é”™è¯¯
-				}
-			} while (input_char != 'u' && input_char != 'd');//è‹¥è¾“å…¥ä¸ä¸ºuå’Œdï¼Œç»§ç»­å¾ªç¯
-			if (input_char == 'u')//å‡åº
-			{
-				do//do-whileå¾ªç¯ï¼Œå…ˆæ‰§è¡Œä¸€æ¬¡
-				{
-					Black_White();//é»‘è‰²èƒŒæ™¯ï¼Œç™½è‰²å­—ä½“
-					Cls();//æ¸…å±
-					cout << "\nÂ·è¯·é€‰æ‹©æ’åºç­–ç•¥ï¼š" << endl;
-					cout << "\n\tã€sã€‘å­¦å·" << endl;
-					cout << "\n\tã€nã€‘å§“å" << endl;
-					cout << "\n\tã€aã€‘å¹³å‡æˆç»©" << endl;
-					cout << "\n\tã€kã€‘è¯¾ç¨‹æˆç»©" << endl;
-					cout << "\n\tã€rã€‘è¿”å›ä¸»ç•Œé¢" << endl;
-					cout << "\n\tã€qã€‘é€€å‡ºç³»ç»Ÿ" << endl;
-					if (error == true)//catché”™è¯¯ï¼Œè°ƒç”¨å‡½æ•°
-					{
-						Error(false);
-					}
-					Input_char(false);//è¾“å…¥å­—ç¬¦
-					switch (input_char)//åˆ¤æ–­è¾“å…¥çš„å­—ç¬¦
-					{
-					case 's'://æ’å…¥æ’åº
-						for (count = 1; count < N; count++)//å¤–å±‚ä»1åˆ°N
-						{
-							for (inside = count; inside > 0; inside--)//å†…å±‚ä»å¤§åˆ°å°å¾ªç¯
-							{
-								if (((data + inside)->number) < ((data + inside - 1)->number))//å¦‚æœç¬¬äºŒä¸ªå€¼å°äºç¬¬ä¸€ä¸ªçš„è¯
-								{
-									swap = *(data + inside);//äº¤æ¢ä¸¤ä¸ªç±»çš„å€¼
-									*(data + inside) = *(data + inside - 1);
-									*(data + inside - 1) = swap;
-								}
-								else//å¤§äºçš„è¯å•¥ä¹Ÿä¸ç”¨è¯´ï¼Œç›´æ¥è·³å‡ºå†…å±‚å¾ªç¯
-								{
-									break;//è·³å‡ºå†…å¾ªç¯
-								}
-							}
-						}
-						break;//breakä¸ç›¸å¿˜
-					case 'n'://æ’å…¥æ’åºï¼Œä¸å‰é¢åŒï¼Œå†ä¸èµ˜è¿°
-						for (count = 1; count < N; count++)
-						{
-							for (inside = count; inside > 0; inside--)
-							{
-								if (((data + inside)->name) < ((data + inside - 1)->name))
-								{
-									swap = *(data + inside);
-									*(data + inside) = *(data + inside - 1);
-									*(data + inside - 1) = swap;
-								}
-								else
-								{
-									break;//è·³å‡ºå†…å¾ªç¯
-								}
-							}
-						}
-						break;
-					case 'a'://æ’å…¥æ’åºï¼Œä¸å‰é¢åŒï¼Œå†ä¸èµ˜è¿°
-						for (count = 1; count < N; count++)
-						{
-							for (inside = count; inside > 0; inside--)
-							{
-								if (((data + inside)->average) < ((data + inside - 1)->average))
-								{
-									swap = *(data + inside);
-									*(data + inside) = *(data + inside - 1);
-									*(data + inside - 1) = swap;
-								}
-								else
-								{
-									break;//è·³å‡ºå†…å¾ªç¯
-								}
-							}
-						}
-						break;
-					case 'k':
-						do
-						{
-							Cls();//æ¸…å±
-							for (inside = 0; inside < M; inside++)//è¾“å‡ºè¯¾ç¨‹åºå·ä¸ä¿¡æ¯
-							{
-								cout << "\n  ã€" << inside << "ã€‘" << *(subject + inside) << endl;
-							}
-							if (error == false)//æ­£å¸¸æƒ…å†µ
-							{
-								cout << "\nÂ·è¯·é€‰æ‹©æ’åºè¯¾ç¨‹ï¼š";
-							}
-							else//catch erroråçš„è¾“å‡º
-							{
-								Black_Red();
-								cout << "\n  ã€è¾“å…¥é”™è¯¯ã€‘è¯·é‡æ–°é€‰æ‹©æ’åºè¯¾ç¨‹ï¼š";
-								Black_White();
-								error = false;
-							}
-							cin >> input_int;//è¾“å…¥åºå·
-							cin.clear();//ä¿®æ­£è¾“å…¥å­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰ï¼Œæ”¹æ­£é”™è¯¯æ ‡è¯†
-							cin.ignore(1024, '\n');//ä¿®æ­£è¾“å…¥å­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰ï¼Œæ¸…ç©ºè¾“å…¥æµ
-							if (input_int < 0 || input_int >= M)//å¦‚æœåºå·ä¸æ˜¯0~Mï¼Œé‚£ä¹ˆè¾“å…¥çš„æœ‰é—®é¢˜
-							{
-								error = true;//erroré©¬ä¸Šå®‰æ’
-							}
-						} while (input_int < 0 || input_int >= M);//å¦‚æœåºå·ä¸æ˜¯0~Mï¼Œé‚£ä¹ˆç»§ç»­å¾ªç¯
-						//æ’å…¥æ’åºï¼Œä¸å‰é¢åŒï¼Œå†ä¸èµ˜è¿°
-						for (count = 1; count < N; count++)
-						{
-							for (inside = count; inside > 0; inside--)
-							{
-								if (((data + inside)->score[input_int]) < ((data + inside - 1)->score[input_int]))
-								{
-									swap = *(data + inside);
-									*(data + inside) = *(data + inside - 1);
-									*(data + inside - 1) = swap;
-								}
-								else
-								{
-									break;//è·³å‡ºå†…å¾ªç¯
-								}
-							}
-						}
-						break;
-					case 'r':Window(0, 0, 80, 34); return; break;//ç›´æ¥ç»“æŸå‡½æ•°è°ƒç”¨ï¼Œè¿”å›ä¸»ç•Œé¢ï¼Œä»ç„¶éœ€è¦é‡æ–°è®¾ç½®ç¼“å†²åŒºå¤§å°ï¼Œå¦åˆ™ä¼šå‡ºç°bug
-					case 'q':exit(0); break;//qåˆ™ç›´æ¥é€€å‡ºç³»ç»Ÿï¼Œè¿”å›å€¼0
-					default: error = true;//å¦åˆ™ï¼Œè¾“å…¥é”™è¯¯
-					}
-				} while (input_char != 's' && input_char != 'n' && input_char != 'a' && input_char != 'k');//è¿™å›éªŒè¯çš„æœ‰ç‚¹å„¿å¤šï¼Œæœ‰4ä¸ªå­—æ¯
-			}
-			else if (input_char == 'd')//é™åº
-			{
-				do//do-whileå¾ªç¯ï¼Œå…ˆæ‰§è¡Œä¸€æ¬¡
-				{
-					Black_White();//é»‘è‰²èƒŒæ™¯ï¼Œç™½è‰²å­—ä½“
-					Cls();//æ¸…å±
-					cout << "\nÂ·è¯·é€‰æ‹©æ’åºç­–ç•¥ï¼š" << endl;
-					cout << "\n\tã€sã€‘å­¦å·" << endl;
-					cout << "\n\tã€nã€‘å§“å" << endl;
-					cout << "\n\tã€aã€‘å¹³å‡æˆç»©" << endl;
-					cout << "\n\tã€kã€‘è¯¾ç¨‹æˆç»©" << endl;
-					cout << "\n\tã€rã€‘è¿”å›ä¸»ç•Œé¢" << endl;
-					cout << "\n\tã€qã€‘é€€å‡ºç³»ç»Ÿ" << endl;
-					if (error == true)//catché”™è¯¯ï¼Œè°ƒç”¨å‡½æ•°
-					{
-						Error(false);
-					}
-					Input_char(false);//è¾“å…¥å­—ç¬¦
-					switch (input_char)//åˆ¤æ–­è¾“å…¥çš„å­—ç¬¦
-					{
-					case 's'://å†’æ³¡æ’åº
-						for (count = 0; count < N - 1; count++)//å¤–å±‚countä»0å¼€å§‹åˆ°N-1è¿›è¡Œå¾ªç¯
-						{
-							for (inside = 0; inside < N - count - 1; inside++)//å†…å±‚insideä»0å¼€å§‹åˆ°N-count-1è¿›è¡Œå¾ªç¯
-							{
-								if (((data + inside)->number) < ((data + inside + 1)->number))//å¦‚æœç¬¬ä¸€ä¸ªæ•°çš„å€¼å°äºç¬¬äºŒä¸ªæ•°çš„å€¼çš„è¯
-								{
-									swap = *(data + inside);//äº¤æ¢ä¸¤ä¸ªç±»çš„å€¼
-									*(data + inside) = *(data + inside + 1);
-									*(data + inside + 1) = swap;
-								}
-								else
-								{
-									break;//è·³å‡ºå†…å¾ªç¯
-								}
-							}
-						}
-						break;
-					case 'n'://å†’æ³¡æ’åº
-						for (count = 0; count < N - 1; count++)//å¤–å±‚countä»0å¼€å§‹åˆ°N-1è¿›è¡Œå¾ªç¯
-						{
-							for (inside = 0; inside < N - count - 1; inside++)//å†…å±‚insideä»0å¼€å§‹åˆ°N-count-1è¿›è¡Œå¾ªç¯
-							{
-								if (((data + inside)->name) < ((data + inside + 1)->name))//å¦‚æœç¬¬ä¸€ä¸ªæ•°çš„å€¼å°äºç¬¬äºŒä¸ªæ•°çš„å€¼çš„è¯
-								{
-									swap = *(data + inside);//äº¤æ¢ä¸¤ä¸ªç±»çš„å€¼
-									*(data + inside) = *(data + inside + 1);
-									*(data + inside + 1) = swap;
-								}
-								else
-								{
-									break;//è·³å‡ºå†…å¾ªç¯
-								}
-							}
-						}
-						break;
-					case 'a'://å†’æ³¡æ’åºï¼Œä¸å‰é¢åŒï¼Œå†ä¸èµ˜è¿°
-						for (count = 0; count < N - 1; count++)//å¤–å±‚countä»0å¼€å§‹åˆ°N-1è¿›è¡Œå¾ªç¯
-						{
-							for (inside = 0; inside < N - count - 1; inside++)//å†…å±‚insideä»0å¼€å§‹åˆ°N-count-1è¿›è¡Œå¾ªç¯
-							{
-								if (((data + inside)->average) < ((data + inside + 1)->average))//å¦‚æœç¬¬ä¸€ä¸ªæ•°çš„å€¼å°äºç¬¬äºŒä¸ªæ•°çš„å€¼çš„è¯
-								{
-									swap = *(data + inside);//äº¤æ¢ä¸¤ä¸ªç±»çš„å€¼
-									*(data + inside) = *(data + inside + 1);
-									*(data + inside + 1) = swap;
-								}
-								else
-								{
-									break;//è·³å‡ºå†…å¾ªç¯
-								}
-							}
-						}
-						break;
-					case 'k':
-						do
-						{
-							Cls();//æ¸…å±
-							for (inside = 0; inside < M; inside++)//è¾“å‡ºè¯¾ç¨‹ä¿¡æ¯
-							{
-								cout << "\n  ã€" << inside << "ã€‘" << *(subject + inside) << endl;
-							}
-							if (error == false)
-							{
-								cout << "\nÂ·è¯·é€‰æ‹©æ’åºè¯¾ç¨‹ï¼š";
-							}
-							else
-							{
-								Black_Red();
-								cout << "\n  ã€è¾“å…¥é”™è¯¯ã€‘è¯·é‡æ–°é€‰æ‹©æ’åºè¯¾ç¨‹ï¼š";
-								Black_White();
-								error = false;
-							}
-							cin >> input_int;//è¾“å…¥åºå·
-							cin.clear();//ä¿®æ­£è¾“å…¥å¤šä¸ªå­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰
-							cin.ignore(1024, '\n');//ä¿®æ­£è¾“å…¥å¤šä¸ªå­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰
-							if (input_int < 0 || input_int >= M)//ä¸€ç›´åˆ¤æ–­catchä¸€ç›´çˆ½
-							{
-								error = true;
-							}
-						} while (input_int < 0 || input_int >= M);//ä¸€ç›´å¾ªç¯ä¸€ç›´çˆ½
-						//å†’æ³¡æ’åº
-						for (count = 0; count < N - 1; count++)//å¤–å±‚countä»0å¼€å§‹åˆ°N-1è¿›è¡Œå¾ªç¯
-						{
-							for (inside = 0; inside < N - count - 1; inside++)//å†…å±‚insideä»0å¼€å§‹åˆ°N-count-1è¿›è¡Œå¾ªç¯
-							{
-								if (((data + inside)->score[input_int]) < ((data + inside + 1)->score[input_int]))//å¦‚æœç¬¬ä¸€ä¸ªæ•°çš„å€¼å°äºç¬¬äºŒä¸ªæ•°çš„å€¼çš„è¯
-								{
-									swap = *(data + inside);//äº¤æ¢ä¸¤ä¸ªç±»çš„å€¼
-									*(data + inside) = *(data + inside + 1);
-									*(data + inside + 1) = swap;
-								}
-								else
-								{
-									break;//è·³å‡ºå†…å¾ªç¯
-								}
-							}
-						}
-						break;
-					case 'r':Window(0, 0, 80, 34); return; break;//ç›´æ¥ç»“æŸå‡½æ•°è°ƒç”¨ï¼Œè¿”å›ä¸»ç•Œé¢ï¼Œè¯´å¾ˆå¤šæ¬¡äº†ï¼Œä¸è¯´äº†
-					case 'q':exit(0); break;//qåˆ™ç›´æ¥é€€å‡ºç³»ç»Ÿï¼Œè¿”å›å€¼0
-					default: error = true;//å¦åˆ™ï¼Œè¾“å…¥é”™è¯¯
-					}
-				} while (input_char != 's' && input_char != 'n' && input_char != 'a' && input_char != 'k');//å…¶å®å°±æ˜¯å°†å‡åºå¤åˆ¶ç²˜è´´å¤§æ³•ï¼Œç„¶åæ”¹å‡ ä¸ªå°äºå·~ä¾¿æˆä¸ºäº†é™åº
-			}
+			cout << "\n¡¤Êı¾İÒÑÈ«²¿±ê¼ÇÎªÉ¾³ı" << endl;
 		}
-		Window(0, 0, 80, 34);//ä»¥é˜²ä¸‡ä¸€å‡ºç°æ˜¾ç¤ºbugï¼Œä¾ç„¶æ•…æˆ‘
-	}
-	/*æ¨¡å—3::æˆç»©æ’åºç»“æŸ*/
+		Pause(false);//ÔİÍ£ÆÁÄ»Êä³ö//ÔİÍ£ÏÔÊ¾ÒÔµÈ´ıÏÂÒ»²½²Ù×÷
 
-	/*æ¨¡å—4::æˆç»©ä¿®æ”¹*/
-	void Update()//æˆç»©ä¿®æ”¹ã€æ£€ç´¢ä¸åˆ é™¤
+		Window(0, 0, 80, 34);//ĞëÖØĞÂÉèÖÃ´°¿Ú´óĞ¡
+	}
+	/*Ä£¿é2::³É¼¨ÏÔÊ¾½áÊø*/
+
+	/*Ä£¿é3::³É¼¨ÅÅĞò*/
+	void Sort()//³É¼¨ÅÅĞò£¬Òò×÷ÒµÒªÇó£¬ÊÖ¶¯ÊµÏÖ¼òµ¥ÅÅĞòËã·¨£¬¾Í²»µ÷¿âÁË
 	{
-		Title(TEXT("å­¦ç”Ÿæˆç»©ç®¡ç†ç³»ç»Ÿ::æˆç»©ä¿®æ”¹"));//è®¾ç½®æ ‡é¢˜
-		Window(0, 0, 64, 34);//è®¾ç½®çª—å£å¤§å°ä¸º64è¡Œ34åˆ—
-		Black_White();//æ›´æ–°å‰æ™¯è‰²ã€èƒŒæ™¯è‰²
-		Cls();//æ¸…å±
-		if (data == NULL || subject == NULL)//ä¸ºäº†ä¸‡æ— ä¸€å¤±ï¼Œä¾ç„¶éœ€è¦éªŒè¯æ˜¯å¦å·²ç»å½•å…¥æ•°æ®
+		Title(TEXT("Ñ§Éú³É¼¨¹ÜÀíÏµÍ³::³É¼¨ÅÅĞò"));//ÉèÖÃ±êÌâ
+		Window(0, 0, 80, 34);//ÉèÖÃ´°¿Ú´óĞ¡Îª80ĞĞ34ÁĞ
+		Black_White();//¸üĞÂÇ°¾°É«¡¢±³¾°É«
+		Cls();//ÇåÆÁ
+		Display_cursor();//ÏÔÊ¾¹â±ê
+		if (data == NULL || subject == NULL)//Ö¸ÕëÎª¿Õ£¬ÉĞÎ´Â¼Èë
 		{
-			Display_cursor();//æ˜¾ç¤ºå…‰æ ‡
-			cout << "\nÂ·å°šæœªå½•å…¥å­¦ç”Ÿæ•°æ®ï¼Œå³å°†è¿”å›ä¸»èœå•..." << endl;
-			Pause(false);//æš‚åœå±å¹•è¾“å‡º
+			cout << "\n¡¤ÉĞÎ´Â¼ÈëÑ§ÉúÊı¾İ£¬¼´½«·µ»ØÖ÷²Ëµ¥..." << endl;
+			Pause(false);//ÔİÍ£ÆÁÄ»Êä³ö
+			return;
 		}
-		else//å¦åˆ™å°±å·²ç»å­˜åœ¨æ•°æ®ï¼Œç„¶åé€‰æ‹©æ£€ç´¢ç±»åˆ«
+
+		Hide_cursor();//Òş²Ø¹â±ê
+		do//do-whileÑ­»·£¬ÏÈÖ´ĞĞÒ»´Î
 		{
-			do//do-whileå¾ªç¯ï¼Œå…ˆæ‰§è¡Œä¸€æ¬¡
+			Black_White();//ºÚÉ«±³¾°£¬°×É«×ÖÌå
+			Cls();//ÇåÆÁ
+			cout << "\n¡¤ÇëÑ¡ÔñÅÅĞò·½Ê½£º" << endl;
+			cout << "\n\t¡¾u¡¿ÉıĞò" << endl;
+			cout << "\n\t¡¾d¡¿½µĞò" << endl;
+			cout << "\n\t¡¾r¡¿·µ»ØÖ÷½çÃæ" << endl;
+			cout << "\n\t¡¾q¡¿ÍË³öÏµÍ³" << endl;
+			if (error == true)//catch´íÎó£¬µ÷ÓÃº¯Êı
 			{
-				Hide_cursor();//éšè—å…‰æ ‡
-				Black_White();//é»‘è‰²èƒŒæ™¯ï¼Œç™½è‰²å­—ä½“
-				Cls();//æ¸…å±
-				cout << "\nÂ·è¯·é€‰æ‹©æ£€ç´¢ç±»åˆ«ï¼š" << endl;
-				cout << "\n\tã€oã€‘åºå·" << endl;
-				cout << "\n\tã€sã€‘å­¦å·" << endl;
-				cout << "\n\tã€nã€‘å§“å" << endl;
-				cout << "\n\tã€rã€‘è¿”å›ä¸»ç•Œé¢" << endl;
-				cout << "\n\tã€qã€‘é€€å‡ºç³»ç»Ÿ" << endl;
-				if (error == true)//catché”™è¯¯ï¼Œè°ƒç”¨æ˜¾ç¤ºé”™è¯¯å‡½æ•°
+				Error(false);//µ÷ÓÃErrorº¯Êı
+			}
+			Input_char(false);//ÊäÈë×Ö·û
+			switch (input_char)//ÅĞ¶ÏÊäÈëµÄ×Ö·û
+			{
+			case 'u':break;//ÎªuÔòÌø³öswitchÓï¾ä
+			case 'd':break;//ÎªdÔòÌø³öswitchÓï¾ä
+			case 'r':Window(0, 0, 80, 34); return; break;//Ö±½Ó½áÊøº¯Êıµ÷ÓÃ£¬·µ»ØÖ÷½çÃæ£¬·µ»ØÖ®Ç°ĞëÖØĞÂÉèÖÃ´°¿Ú´óĞ¡
+			case 'q':exit(0); break;//qÔòÖ±½ÓÍË³öÏµÍ³£¬·µ»ØÖµ0
+			default: error = true;//·ñÔò£¬ÊäÈë´íÎó
+			}
+		} while (input_char != 'u' && input_char != 'd');//ÈôÊäÈë²»ÎªuºÍd£¬¼ÌĞøÑ­»·
+		if (input_char == 'u')//ÉıĞò£¬ÆäÊµÕâÃ´¶àif...elseÊÇ²»Í×ÉÆµÄ·½·¨£¬µ«ÎÒÀÁµÃ¸ÄÁË
+		{
+			do//do-whileÑ­»·£¬ÏÈÖ´ĞĞÒ»´Î
+			{
+				Black_White();//ºÚÉ«±³¾°£¬°×É«×ÖÌå
+				Cls();//ÇåÆÁ
+				cout << "\n¡¤ÇëÑ¡ÔñÅÅĞò²ßÂÔ£º" << endl;
+				cout << "\n\t¡¾s¡¿Ñ§ºÅ" << endl;
+				cout << "\n\t¡¾n¡¿ĞÕÃû" << endl;
+				cout << "\n\t¡¾a¡¿Æ½¾ù³É¼¨" << endl;
+				cout << "\n\t¡¾k¡¿¿Î³Ì³É¼¨" << endl;
+				cout << "\n\t¡¾r¡¿·µ»ØÖ÷½çÃæ" << endl;
+				cout << "\n\t¡¾q¡¿ÍË³öÏµÍ³" << endl;
+				if (error == true)//catch´íÎó£¬µ÷ÓÃº¯Êı
 				{
 					Error(false);
 				}
-				Input_char(false);//è¾“å…¥å­—ç¬¦
-				switch (input_char)//åˆ¤æ–­è¾“å…¥çš„å­—ç¬¦
+				Input_char(false);//ÊäÈë×Ö·û
+				switch (input_char)//ÅĞ¶ÏÊäÈëµÄ×Ö·û
 				{
-				case 'o'://åºå·
+				case 's'://²åÈëÅÅĞò
+					for (count = 1; count < N; count++)//Íâ²ã´Ó1µ½N
+					{
+						for (inside = count; inside > 0; inside--)//ÄÚ²ã´Ó´óµ½Ğ¡Ñ­»·
+						{
+							if (((data + inside)->number) < ((data + inside - 1)->number))//Èç¹ûµÚ¶ş¸öÖµĞ¡ÓÚµÚÒ»¸öµÄ»°
+							{
+								swap = *(data + inside);//½»»»Á½¸öÀàµÄÖµ
+								*(data + inside) = *(data + inside - 1);
+								*(data + inside - 1) = swap;
+							}
+							else//´óÓÚµÄ»°É¶Ò²²»ÓÃËµ£¬Ö±½ÓÌø³öÄÚ²ãÑ­»·
+							{
+								break;//Ìø³öÄÚÑ­»·
+							}
+						}
+					}
+					break;//break²»ÏàÍü
+				case 'n'://²åÈëÅÅĞò£¬ÓëÇ°ÃæÍ¬£¬ÔÙ²»×¸Êö
+					for (count = 1; count < N; count++)
+					{
+						for (inside = count; inside > 0; inside--)
+						{
+							if (((data + inside)->name) < ((data + inside - 1)->name))
+							{
+								swap = *(data + inside);
+								*(data + inside) = *(data + inside - 1);
+								*(data + inside - 1) = swap;
+							}
+							else
+							{
+								break;//Ìø³öÄÚÑ­»·
+							}
+						}
+					}
+					break;
+				case 'a'://²åÈëÅÅĞò£¬ÓëÇ°ÃæÍ¬£¬ÔÙ²»×¸Êö
+					for (count = 1; count < N; count++)
+					{
+						for (inside = count; inside > 0; inside--)
+						{
+							if (((data + inside)->average) < ((data + inside - 1)->average))
+							{
+								swap = *(data + inside);
+								*(data + inside) = *(data + inside - 1);
+								*(data + inside - 1) = swap;
+							}
+							else
+							{
+								break;//Ìø³öÄÚÑ­»·
+							}
+						}
+					}
+					break;
+				case 'k':
 					do
 					{
-						Display_cursor();//æ˜¾ç¤ºå…‰æ ‡
-						Cls();//æ¸…å±
-						if (error == false)//å¦‚æœè¾“å…¥æ­£ç¡®å°±ç›´æ¥è¾“å‡º
+						Cls();//ÇåÆÁ
+						for (inside = 0; inside < M; inside++)//Êä³ö¿Î³ÌĞòºÅÓëĞÅÏ¢
 						{
-							cout << "\nÂ·è¯·è¾“å…¥æ£€ç´¢åºå·ï¼š";
+							cout << "\n  ¡¾" << inside << "¡¿" << *(subject + inside) << endl;
 						}
-						else//å¦‚æœè¾“å…¥é”™è¯¯ï¼Œå°±è®©é‡æ–°è¾“å‡º
+						if (error == false)//Õı³£Çé¿ö
 						{
-							Black_Red();//è®¾ç½®å­—ä½“é¢œè‰²ä¸ºçº¢è‰²
-							cout << "\n  ã€è¾“å…¥é”™è¯¯ã€‘è¯·é‡æ–°è¾“å…¥æ£€ç´¢åºå·ï¼š";
-							Black_White();//è®¾ç½®å­—ä½“é¢œè‰²ä¸ºç™½è‰²
+							cout << "\n¡¤ÇëÑ¡ÔñÅÅĞò¿Î³Ì£º";
+						}
+						else//catch errorºóµÄÊä³ö
+						{
+							Black_Red();
+							cout << "\n  ¡¾ÊäÈë´íÎó¡¿ÇëÖØĞÂÑ¡ÔñÅÅĞò¿Î³Ì£º";
+							Black_White();
 							error = false;
 						}
-						cin >> input_int;//è¾“å…¥ä¸€ä¸ªæ•°å€¼
-						cin.clear();//ä¿®æ­£è¾“å…¥å¤šä¸ªå­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰
-						cin.ignore(1024, '\n');//ä¿®æ­£è¾“å…¥å¤šä¸ªå­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰
-						if (input_int <= 0 || input_int > N_search)//å¯ä»¥æ ¡éªŒåˆ°å·²æ ‡è®°åˆ é™¤çš„æ•°æ®
+						cin >> input_int;//ÊäÈëĞòºÅ
+						cin.clear();//ĞŞÕıÊäÈë×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©£¬¸ÄÕı´íÎó±êÊ¶
+						cin.ignore(1024, '\n');//ĞŞÕıÊäÈë×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©£¬Çå¿ÕÊäÈëÁ÷
+						if (input_int < 0 || input_int >= M)//Èç¹ûĞòºÅ²»ÊÇ0~M£¬ÄÇÃ´ÊäÈëµÄÓĞÎÊÌâ
+						{
+							error = true;//errorÂíÉÏ°²ÅÅ
+						}
+					} while (input_int < 0 || input_int >= M);//Èç¹ûĞòºÅ²»ÊÇ0~M£¬ÄÇÃ´¼ÌĞøÑ­»·
+					//²åÈëÅÅĞò£¬ÓëÇ°ÃæÍ¬£¬ÔÙ²»×¸Êö
+					for (count = 1; count < N; count++)
+					{
+						for (inside = count; inside > 0; inside--)
+						{
+							if (((data + inside)->score[input_int]) < ((data + inside - 1)->score[input_int]))
+							{
+								swap = *(data + inside);
+								*(data + inside) = *(data + inside - 1);
+								*(data + inside - 1) = swap;
+							}
+							else
+							{
+								break;//Ìø³öÄÚÑ­»·
+							}
+						}
+					}
+					break;
+				case 'r':Window(0, 0, 80, 34); return; break;//Ö±½Ó½áÊøº¯Êıµ÷ÓÃ£¬·µ»ØÖ÷½çÃæ£¬ÈÔÈ»ĞèÒªÖØĞÂÉèÖÃ»º³åÇø´óĞ¡£¬·ñÔò»á³öÏÖbug
+				case 'q':exit(0); break;//qÔòÖ±½ÓÍË³öÏµÍ³£¬·µ»ØÖµ0
+				default: error = true;//·ñÔò£¬ÊäÈë´íÎó
+				}
+			} while (input_char != 's' && input_char != 'n' && input_char != 'a' && input_char != 'k');//Õâ»ØÑéÖ¤µÄÓĞµã¶ù¶à£¬ÓĞ4¸ö×ÖÄ¸
+		}
+		else if (input_char == 'd')//½µĞò
+		{
+			do//do-whileÑ­»·£¬ÏÈÖ´ĞĞÒ»´Î
+			{
+				Black_White();//ºÚÉ«±³¾°£¬°×É«×ÖÌå
+				Cls();//ÇåÆÁ
+				cout << "\n¡¤ÇëÑ¡ÔñÅÅĞò²ßÂÔ£º" << endl;
+				cout << "\n\t¡¾s¡¿Ñ§ºÅ" << endl;
+				cout << "\n\t¡¾n¡¿ĞÕÃû" << endl;
+				cout << "\n\t¡¾a¡¿Æ½¾ù³É¼¨" << endl;
+				cout << "\n\t¡¾k¡¿¿Î³Ì³É¼¨" << endl;
+				cout << "\n\t¡¾r¡¿·µ»ØÖ÷½çÃæ" << endl;
+				cout << "\n\t¡¾q¡¿ÍË³öÏµÍ³" << endl;
+				if (error == true)//catch´íÎó£¬µ÷ÓÃº¯Êı
+				{
+					Error(false);
+				}
+				Input_char(false);//ÊäÈë×Ö·û
+				switch (input_char)//ÅĞ¶ÏÊäÈëµÄ×Ö·û
+				{
+				case 's'://Ã°ÅİÅÅĞò
+					for (count = 0; count < N - 1; count++)//Íâ²ãcount´Ó0¿ªÊ¼µ½N-1½øĞĞÑ­»·
+					{
+						for (inside = 0; inside < N - count - 1; inside++)//ÄÚ²ãinside´Ó0¿ªÊ¼µ½N-count-1½øĞĞÑ­»·
+						{
+							if (((data + inside)->number) < ((data + inside + 1)->number))//Èç¹ûµÚÒ»¸öÊıµÄÖµĞ¡ÓÚµÚ¶ş¸öÊıµÄÖµµÄ»°
+							{
+								swap = *(data + inside);//½»»»Á½¸öÀàµÄÖµ
+								*(data + inside) = *(data + inside + 1);
+								*(data + inside + 1) = swap;
+							}
+							else
+							{
+								break;//Ìø³öÄÚÑ­»·
+							}
+						}
+					}
+					break;
+				case 'n'://Ã°ÅİÅÅĞò
+					for (count = 0; count < N - 1; count++)//Íâ²ãcount´Ó0¿ªÊ¼µ½N-1½øĞĞÑ­»·
+					{
+						for (inside = 0; inside < N - count - 1; inside++)//ÄÚ²ãinside´Ó0¿ªÊ¼µ½N-count-1½øĞĞÑ­»·
+						{
+							if (((data + inside)->name) < ((data + inside + 1)->name))//Èç¹ûµÚÒ»¸öÊıµÄÖµĞ¡ÓÚµÚ¶ş¸öÊıµÄÖµµÄ»°
+							{
+								swap = *(data + inside);//½»»»Á½¸öÀàµÄÖµ
+								*(data + inside) = *(data + inside + 1);
+								*(data + inside + 1) = swap;
+							}
+							else
+							{
+								break;//Ìø³öÄÚÑ­»·
+							}
+						}
+					}
+					break;
+				case 'a'://Ã°ÅİÅÅĞò£¬ÓëÇ°ÃæÍ¬£¬ÔÙ²»×¸Êö
+					for (count = 0; count < N - 1; count++)//Íâ²ãcount´Ó0¿ªÊ¼µ½N-1½øĞĞÑ­»·
+					{
+						for (inside = 0; inside < N - count - 1; inside++)//ÄÚ²ãinside´Ó0¿ªÊ¼µ½N-count-1½øĞĞÑ­»·
+						{
+							if (((data + inside)->average) < ((data + inside + 1)->average))//Èç¹ûµÚÒ»¸öÊıµÄÖµĞ¡ÓÚµÚ¶ş¸öÊıµÄÖµµÄ»°
+							{
+								swap = *(data + inside);//½»»»Á½¸öÀàµÄÖµ
+								*(data + inside) = *(data + inside + 1);
+								*(data + inside + 1) = swap;
+							}
+							else
+							{
+								break;//Ìø³öÄÚÑ­»·
+							}
+						}
+					}
+					break;
+				case 'k':
+					do
+					{
+						Cls();//ÇåÆÁ
+						for (inside = 0; inside < M; inside++)//Êä³ö¿Î³ÌĞÅÏ¢
+						{
+							cout << "\n  ¡¾" << inside << "¡¿" << *(subject + inside) << endl;
+						}
+						if (error == false)
+						{
+							cout << "\n¡¤ÇëÑ¡ÔñÅÅĞò¿Î³Ì£º";
+						}
+						else
+						{
+							Black_Red();
+							cout << "\n  ¡¾ÊäÈë´íÎó¡¿ÇëÖØĞÂÑ¡ÔñÅÅĞò¿Î³Ì£º";
+							Black_White();
+							error = false;
+						}
+						cin >> input_int;//ÊäÈëĞòºÅ
+						cin.clear();//ĞŞÕıÊäÈë¶à¸ö×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©
+						cin.ignore(1024, '\n');//ĞŞÕıÊäÈë¶à¸ö×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©
+						if (input_int < 0 || input_int >= M)//Ò»Ö±ÅĞ¶ÏcatchÒ»Ö±Ë¬
 						{
 							error = true;
 						}
-					} while (input_int <= 0 || input_int > N_search);//æ ¡éªŒçš„æ˜¯N_searchï¼Œå³Nçš„æœ€å¤§å€¼ï¼Œ
-					Cls();//æ¸…å±
-					cout << "\nÂ·ä¿®æ”¹åºå·ä¸º[ " << input_int << " ]çš„å­¦ç”Ÿçš„æ•°æ® >> " << endl;
-					cout << "\n  åŸå­¦å·ï¼š" << (data + input_int - 1)->number << endl;
-					cout << "\n  åŸå§“åï¼š" << (data + input_int - 1)->name << endl;
-					for (inside = 0; inside < M; inside++)
+					} while (input_int < 0 || input_int >= M);//Ò»Ö±Ñ­»·Ò»Ö±Ë¬
+					//Ã°ÅİÅÅĞò
+					for (count = 0; count < N - 1; count++)//Íâ²ãcount´Ó0¿ªÊ¼µ½N-1½øĞĞÑ­»·
 					{
-						cout << "\n  è¯¾ç¨‹ã€" << *(subject + inside) << "ã€‘çš„åŸæˆç»©ï¼š" << (data + input_int - 1)->score[inside] << endl;
-					}
-					if (IDOK == MessageBox(GetConsoleWindow(), TEXT("æ˜¯å¦åˆ é™¤è¯¥å­¦ç”Ÿçš„æ•°æ®ï¼Ÿ"), TEXT("åˆ é™¤æ“ä½œ"), MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2))
-					{
-						//è°ƒç”¨Windows APIå¼¹å‡ºå¯¹è¯æ¡†ï¼Œç¼ºçœå€¼ä¸ºå–æ¶ˆ
-						(data + input_int - 1)->delete_mark = true;
-						for (int temp = input_int - 1; temp < N - 1; temp++)//å†’æ³¡æ’åºæ³•å°†å¸¦æœ‰åˆ é™¤æ ‡è®°çš„ç±»æ”¾åœ¨æœ€å
+						for (inside = 0; inside < N - count - 1; inside++)//ÄÚ²ãinside´Ó0¿ªÊ¼µ½N-count-1½øĞĞÑ­»·
 						{
-							swap = *(data + temp);//åƒç¯‡ä¸€å¾‹çš„äº¤æ¢æ“ä½œ
-							*(data + temp) = *(data + temp + 1);
-							*(data + temp + 1) = swap;
-						}
-						N--;//å­¦ç”Ÿä¸ªæ•°å‡ä¸€
-						Window(0, 0, 80, 34);//ç»“æŸå‡½æ•°è°ƒç”¨å‰ï¼Œå¿…é¡»é‡æ–°è°ƒæ•´çª—å£ï¼Œå¦åˆ™å‡ºç°bug
-						return;//è‹¥å€¼ä¸ºç¡®å®šï¼Œåˆ é™¤ååˆ™æ­¤å‡½æ•°è°ƒç”¨ç»“æŸ
-					}
-					else//å¦åˆ™å¦‚æœå€¼ä¸ºå–æ¶ˆçš„è¯
-					{
-						if ((data + input_int - 1)->delete_mark == true)//é€†åˆ é™¤æ“ä½œ
-						{
-							(data + input_int - 1)->delete_mark = false;//æ•°æ®å›æ˜¥å¤§æ³•
-							N++;//å­¦ç”Ÿä¸ªæ•°+1ï¼Œyeah
-						}
-					}
-					cout << "\nÂ·å­¦å·ä¿®æ”¹ä¸ºï¼š";
-					cin >> (data + input_int - 1)->number;//è¾“å…¥å­¦å·
-					cout << "\nÂ·å§“åä¿®æ”¹ä¸ºï¼š";
-					cin >> (data + input_int - 1)->name;//è¾“å…¥å§“å
-					(data + input_int - 1)->average = 0.0;//å­¦ç”Ÿçš„å¹³å‡å€¼èµ‹å€¼ä¸º0.0
-					for (inside = 0; inside < M; inside++)//å¾ªç¯ä¿®æ”¹è¯¾ç¨‹ä¿¡æ¯
-					{
-						do {//ä¸€å¦‚æ—¢å¾€doå¾ªç¯ï¼Œæ·¦ï¼
-							cout << "\nÂ·è¯¾ç¨‹ã€" << *(subject + inside) << "ã€‘çš„æˆç»©ä¿®æ”¹ä¸ºï¼š";
-							cin >> (data + input_int - 1)->score[inside];//è¾“å…¥æˆç»©
-							cin.clear();//ä¿®æ­£è¾“å…¥å¤šä¸ªå­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰
-							cin.ignore(1024, '\n');//ä¿®æ­£è¾“å…¥å¤šä¸ªå­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰
-							if ((data + input_int - 1)->score[inside] < 0)//ä¸€å¦‚æ—¢å¾€çš„æ ¡éªŒæ“ä½œ
+							if (((data + inside)->score[input_int]) < ((data + inside + 1)->score[input_int]))//Èç¹ûµÚÒ»¸öÊıµÄÖµĞ¡ÓÚµÚ¶ş¸öÊıµÄÖµµÄ»°
 							{
-								cout << "  ã€æˆç»©ä¸èƒ½å°äº0ã€‘" << endl;
+								swap = *(data + inside);//½»»»Á½¸öÀàµÄÖµ
+								*(data + inside) = *(data + inside + 1);
+								*(data + inside + 1) = swap;
 							}
-						} while ((data + input_int - 1)->score[inside] < 0);//ç†Ÿæ‚‰çš„whileå¾ªç¯
-						(data + input_int - 1)->average += (data + input_int - 1)->score[inside];//ç´¯åŠ å’Œ
+							else
+							{
+								break;//Ìø³öÄÚÑ­»·
+							}
+						}
 					}
-					(data + input_int - 1)->average /= (double)(M);//ç´¯åŠ å®Œäº†ä¹‹åç›´æ¥é™¤ï¼Œç®—å¹³å‡å€¼
 					break;
-				case 's'://å­¦å·
-					do
+				case 'r':Window(0, 0, 80, 34); return; break;//Ö±½Ó½áÊøº¯Êıµ÷ÓÃ£¬·µ»ØÖ÷½çÃæ£¬ËµºÜ¶à´ÎÁË£¬²»ËµÁË
+				case 'q':exit(0); break;//qÔòÖ±½ÓÍË³öÏµÍ³£¬·µ»ØÖµ0
+				default: error = true;//·ñÔò£¬ÊäÈë´íÎó
+				}
+			} while (input_char != 's' && input_char != 'n' && input_char != 'a' && input_char != 'k');//ÆäÊµ¾ÍÊÇ½«ÉıĞò¸´ÖÆÕ³Ìù´ó·¨£¬È»ºó¸Ä¼¸¸öĞ¡ÓÚºÅ~±ã³ÉÎªÁË½µĞò
+		}
+
+		Window(0, 0, 80, 34);//ÒÔ·ÀÍòÒ»³öÏÖÏÔÊ¾bug£¬ÒÀÈ»¹ÊÎÒ
+	}
+	/*Ä£¿é3::³É¼¨ÅÅĞò½áÊø*/
+
+	/*Ä£¿é4::³É¼¨ĞŞ¸Ä*/
+	void Update()//³É¼¨ĞŞ¸Ä¡¢¼ìË÷ÓëÉ¾³ı
+	{
+		Title(TEXT("Ñ§Éú³É¼¨¹ÜÀíÏµÍ³::³É¼¨ĞŞ¸Ä"));//ÉèÖÃ±êÌâ
+		Window(0, 0, 80, 34);//ÉèÖÃ´°¿Ú´óĞ¡Îª80ĞĞ34ÁĞ
+		Black_White();//¸üĞÂÇ°¾°É«¡¢±³¾°É«
+		Cls();//ÇåÆÁ
+		if (data == NULL || subject == NULL)//ÎªÁËÍòÎŞÒ»Ê§£¬ÒÀÈ»ĞèÒªÑéÖ¤ÊÇ·ñÒÑ¾­Â¼ÈëÊı¾İ
+		{
+			Display_cursor();//ÏÔÊ¾¹â±ê
+			cout << "\n¡¤ÉĞÎ´Â¼ÈëÑ§ÉúÊı¾İ£¬¼´½«·µ»ØÖ÷²Ëµ¥..." << endl;
+			Pause(false);//ÔİÍ£ÆÁÄ»Êä³ö
+			return;
+		}
+		//·ñÔò¾ÍÒÑ¾­´æÔÚÊı¾İ£¬È»ºóÑ¡Ôñ¼ìË÷Àà±ğ
+
+		do//do-whileÑ­»·£¬ÏÈÖ´ĞĞÒ»´Î
+		{
+			Hide_cursor();//Òş²Ø¹â±ê
+			Black_White();//ºÚÉ«±³¾°£¬°×É«×ÖÌå
+			Cls();//ÇåÆÁ
+			cout << "\n¡¤ÇëÑ¡Ôñ¼ìË÷Àà±ğ£º" << endl;
+			cout << "\n\t¡¾o¡¿ĞòºÅ" << endl;
+			cout << "\n\t¡¾s¡¿Ñ§ºÅ" << endl;
+			cout << "\n\t¡¾n¡¿ĞÕÃû" << endl;
+			cout << "\n\t¡¾r¡¿·µ»ØÖ÷½çÃæ" << endl;
+			cout << "\n\t¡¾q¡¿ÍË³öÏµÍ³" << endl;
+			if (error == true)//catch´íÎó£¬µ÷ÓÃÏÔÊ¾´íÎóº¯Êı
+			{
+				Error(false);
+			}
+			Input_char(false);//ÊäÈë×Ö·û
+			switch (input_char)//ÅĞ¶ÏÊäÈëµÄ×Ö·û
+			{
+			case 'o'://ĞòºÅ
+				do
+				{
+					Display_cursor();//ÏÔÊ¾¹â±ê
+					Cls();//ÇåÆÁ
+					if (error == false)//Èç¹ûÊäÈëÕıÈ·¾ÍÖ±½ÓÊä³ö
 					{
-						Display_cursor();//æ˜¾ç¤ºå…‰æ ‡
-						Cls();//æ¸…å±
-						if (error == false)//å¦‚æœè¾“å…¥æ­£ç¡®ï¼Œæ­£å¸¸è¾“å…¥
-						{
-							cout << "\nÂ·è¯·è¾“å…¥æ£€ç´¢å­¦å·ï¼š";
-						}
-						else//å¦‚æœè¾“å…¥é”™è¯¯ï¼Œå°±è®©é‡æ–°è¾“å‡º
-						{
-							Black_Red();//è®¾ç½®å­—ä½“é¢œè‰²ä¸ºçº¢è‰²
-							cout << "\n  ã€è¾“å…¥é”™è¯¯ã€‘è¯·é‡æ–°è¾“å…¥æ£€ç´¢å­¦å·ï¼š";
-							Black_White();//è®¾ç½®å­—ä½“é¢œè‰²ä¸ºç™½è‰²
-							error = false;
-						}
-						cin >> input_string;//è¾“å…¥å­—ç¬¦ä¸²ï¼Œç”¨ä»¥å¯¹æ¯”åˆ¤æ–­
-						error = true;//ç”­è¯´åˆ«çš„ï¼Œå…ˆç»™æ¥ä¸ªerrorå†è¯´
-						for (count = 0; count < N_search; count++)
-						{
-							if (input_string == (data + count)->number)//åªæœ‰è¾“å…¥çš„å­—ç¬¦ä¸²èƒ½æ‰¾åˆ°
-							{
-								error = false;//æ‰èƒ½è§£é™¤errorï¼Œå¦åˆ™error==trueå°±ä¸€ç›´å¾ªç¯ä¸€ç›´å¾ªç¯
-								break;
-							}
-						}
-					} while (error != false);//æˆ–è€…å¯ä»¥ç›´æ¥åˆ¤æ–­input_string != (data + count)->number
-					Cls();//æ¸…å±
-					cout << "\nÂ·ä¿®æ”¹åºå·ä¸º[ " << count + 1 << " ]çš„å­¦ç”Ÿçš„æ•°æ® >> " << endl;
-					cout << "\n  åŸå­¦å·ï¼š" << (data + count)->number << endl;
-					cout << "\n  åŸå§“åï¼š" << (data + count)->name << endl;
-					for (inside = 0; inside < M; inside++)
-					{
-						cout << "\n  è¯¾ç¨‹ã€" << *(subject + inside) << "ã€‘çš„åŸæˆç»©ï¼š" << (data + count)->score[inside] << endl;
+						cout << "\n¡¤ÇëÊäÈë¼ìË÷ĞòºÅ£º";
 					}
-					if (IDOK == MessageBox(GetConsoleWindow(), TEXT("æ˜¯å¦åˆ é™¤è¯¥å­¦ç”Ÿçš„æ•°æ®ï¼Ÿ"), TEXT("åˆ é™¤æ“ä½œ"), MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2))
+					else//Èç¹ûÊäÈë´íÎó£¬¾Í·µ»Ø
 					{
-						//è°ƒç”¨Windows APIå¼¹å‡ºå¯¹è¯æ¡†ï¼Œç¼ºçœå€¼ä¸ºå–æ¶ˆ
-						(data + count)->delete_mark = true;
-						for (int temp = count; temp < N - 1; temp++)//å†’æ³¡æ’åºæ³•å°†å¸¦æœ‰åˆ é™¤æ ‡è®°çš„ç±»æ”¾åœ¨æœ€å
-						{
-							swap = *(data + temp);//ä¾ç„¶äº¤æ¢æ“ä½œ
-							*(data + temp) = *(data + temp + 1);
-							*(data + temp + 1) = swap;
-						}
-						N--;//å­¦ç”Ÿä¸ªæ•°å‡ä¸€
-						Window(0, 0, 80, 34);//å¿…é¡»é‡æ–°è°ƒæ•´çª—å£ï¼Œå¦åˆ™å‡ºç°bug
-						return;//è‹¥å€¼ä¸ºç¡®å®šï¼Œåˆ é™¤ååˆ™æ­¤å‡½æ•°è°ƒç”¨ç»“æŸ
+						Black_Red();//ÉèÖÃ×ÖÌåÑÕÉ«ÎªºìÉ«
+						cout << "\n  ¡¾ÊäÈë´íÎó¡¿¼´½«·µ»ØÖ÷²Ëµ¥...";
+						Black_White();//ÉèÖÃ×ÖÌåÑÕÉ«Îª°×É«
+						error = false;
+						Pause(false);
+						return;
 					}
-					else//å¦åˆ™å¦‚æœå€¼ä¸ºå–æ¶ˆçš„è¯
+					cin >> input_int;//ÊäÈëÒ»¸öÊıÖµ
+					cin.clear();//ĞŞÕıÊäÈë¶à¸ö×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©
+					cin.ignore(1024, '\n');//ĞŞÕıÊäÈë¶à¸ö×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©
+					if (input_int <= 0 || input_int > N_search)//¿ÉÒÔĞ£Ñéµ½ÒÑ±ê¼ÇÉ¾³ıµÄÊı¾İ
 					{
-						if ((data + count)->delete_mark == true)//é€†åˆ é™¤æ“ä½œï¼Œä¸å¿…å¤šè¯´
-						{
-							(data + count)->delete_mark = false;//å°†åˆ é™¤æ ‡è®°æ”¹ä¸ºå‡ï¼Œå–æ¶ˆåˆ é™¤
-							N++;//å­¦ç”Ÿä¸ªæ•°åŠ ä¸€
-						}
-					}
-					cout << "\nÂ·å­¦å·ä¿®æ”¹ä¸ºï¼š";
-					cin >> (data + count)->number;//å½•å…¥å­¦å·
-					cout << "\nÂ·å§“åä¿®æ”¹ä¸ºï¼š";
-					cin >> (data + count)->name;//å½•å…¥å§“å
-					(data + count)->average = 0.0;//è®©å¹³å‡å€¼é‡ç½®ä¸º0
-					for (inside = 0; inside < M; inside++)//ä¿®æ”¹è¯¾ç¨‹æˆç»©
-					{
-						do {
-							cout << "\nÂ·è¯¾ç¨‹ã€" << *(subject + inside) << "ã€‘çš„æˆç»©ä¿®æ”¹ä¸ºï¼š";
-							cin >> (data + count)->score[inside];//è¾“å…¥æˆç»©
-							cin.clear();//ä¿®æ­£è¾“å…¥å¤šä¸ªå­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰
-							cin.ignore(1024, '\n');//ä¿®æ­£è¾“å…¥å¤šä¸ªå­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰
-							if ((data + count)->score[inside] < 0)//æ ¡éªŒæˆç»©æ˜¯å¦å°äº0
-							{
-								cout << "  ã€æˆç»©ä¸èƒ½å°äº0ã€‘" << endl;
-							}
-						} while ((data + count)->score[inside] < 0);//è‹¥æˆç»©å°äº0ï¼Œå°±è¾“å…¥é”™è¯¯ï¼Œä¸€ç›´å¾ªç¯ç›´åˆ°è¾“å…¥æ­£ç¡®
-						(data + count)->average += (data + count)->score[inside];//ç´¯åŠ è®¡ç®—æˆç»©çš„å’Œ
-					}
-					(data + count)->average /= (double)(M);//ç´¯åŠ å®Œæˆåé™¤ï¼Œè®¡ç®—å¹³å‡å€¼
-					break;
-				case 'n'://å§“å
-					do
-					{
-						Display_cursor();//æ˜¾ç¤ºå…‰æ ‡
-						Cls();//æ¸…å±
-						if (error == false)//å¦‚æœerrorä¸ºå‡è¯´æ˜è¾“å…¥æ­£ç¡®
-						{
-							cout << "\nÂ·è¯·è¾“å…¥æ£€ç´¢å§“åï¼š";
-						}
-						else//å¦åˆ™è¾“å…¥é”™è¯¯
-						{
-							Black_Red();
-							cout << "\n  ã€è¾“å…¥é”™è¯¯ã€‘è¯·é‡æ–°è¾“å…¥æ£€ç´¢å§“åï¼š";//æ›´æ”¹å­—ä½“é¢œè‰²ä¸ºçº¢è‰²ï¼Œåæ”¹ä¸ºç™½è‰²
-							Black_White();
-							error = false;//æ­¤æ¬¡errorç»“æŸï¼Œèµ‹å€¼ä¸ºå‡
-						}
-						cin >> input_string;//è¾“å…¥ä¸€ä¸ªå­—ç¬¦ä¸²ç”¨äºæ£€ç´¢
 						error = true;
-						for (count = 0; count < N_search; count++)//ä»0åˆ°æœ€å¤§å­¦ç”Ÿäººæ•°å¼€å§‹æ£€ç´¢
-						{
-							if (input_string == (data + count)->name)//å¦‚æœç›¸ç­‰
-							{
-								error = false;//æ‰å°†erroræ”¹ä¸ºå‡ï¼Œå³æ‰¾åˆ°äº†åŒ¹é…çš„å­—ç¬¦ä¸²
-								break;
-							}
-						}
-					} while (error != false);//æˆ–è€…å¯ä»¥ç›´æ¥åˆ¤æ–­input_string != (data + count)->name
-					Cls();//æ¸…å±
-					cout << "\nÂ·ä¿®æ”¹åºå·ä¸º[ " << count + 1 << " ]çš„å­¦ç”Ÿçš„æ•°æ® >> " << endl;
-					cout << "\n  åŸå­¦å·ï¼š" << (data + count)->number << endl;
-					cout << "\n  åŸå§“åï¼š" << (data + count)->name << endl;
-					for (inside = 0; inside < M; inside++)//è¾“å‡ºè¯¾ç¨‹åŸæˆç»©
-					{
-						cout << "\n  è¯¾ç¨‹ã€" << *(subject + inside) << "ã€‘çš„åŸæˆç»©ï¼š" << (data + count)->score[inside] << endl;
 					}
-					if (IDOK == MessageBox(GetConsoleWindow(), TEXT("æ˜¯å¦åˆ é™¤è¯¥å­¦ç”Ÿçš„æ•°æ®ï¼Ÿ"), TEXT("åˆ é™¤æ“ä½œ"), MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2))
-					{
-						//è°ƒç”¨Windows APIå¼¹å‡ºå¯¹è¯æ¡†ï¼Œé»˜è®¤å€¼ä¸ºå–æ¶ˆ
-						(data + count)->delete_mark = true;
-						for (int temp = count; temp < N - 1; temp++)//å†’æ³¡æ’åºæ³•å°†å¸¦æœ‰åˆ é™¤æ ‡è®°çš„ç±»æ”¾åœ¨æœ€å
-						{
-							swap = *(data + temp);//äº¤æ¢å­¦ç”Ÿæ•°æ®
-							*(data + temp) = *(data + temp + 1);
-							*(data + temp + 1) = swap;
-						}
-						N--;//å­¦ç”Ÿä¸ªæ•°å‡ä¸€
-						Window(0, 0, 80, 34);//å¿…é¡»é‡æ–°è°ƒæ•´çª—å£ï¼Œå¦åˆ™å‡ºç°bug
-						return;//è‹¥å€¼ä¸ºç¡®å®šï¼Œåˆ é™¤ååˆ™æ­¤å‡½æ•°è°ƒç”¨ç»“æŸ
-					}
-					else
-					{
-						if ((data + count)->delete_mark == true)//é€†åˆ é™¤
-						{
-							(data + count)->delete_mark = false;//å°†åˆ é™¤æ ‡è®°æ”¹ä¸ºå‡ï¼Œå–æ¶ˆåˆ é™¤æ“ä½œ
-							N++;//å­¦ç”Ÿäººæ•°+1
-						}
-					}
-					cout << "\nÂ·å­¦å·ä¿®æ”¹ä¸ºï¼š";
-					cin >> (data + count)->number;//è¾“å…¥å­¦å·
-					cout << "\nÂ·å§“åä¿®æ”¹ä¸ºï¼š";
-					cin >> (data + count)->name;//è¾“å…¥å§“å
-					(data + count)->average = 0.0;//å¹³å‡å€¼ä¾ç„¶ä»0å¼€å§‹
-					for (inside = 0; inside < M; inside++)//éå†è¯¾ç¨‹
-					{
-						do {
-							cout << "\nÂ·è¯¾ç¨‹ã€" << *(subject + inside) << "ã€‘çš„æˆç»©ä¿®æ”¹ä¸ºï¼š";
-							cin >> (data + count)->score[inside];//å½•å…¥æˆç»©ä¿®æ”¹
-							cin.clear();//ä¿®æ­£è¾“å…¥å¤šä¸ªå­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰
-							cin.ignore(1024, '\n');//ä¿®æ­£è¾“å…¥å¤šä¸ªå­—æ¯å¼•èµ·çš„crashï¼ˆå´©æºƒï¼‰
-							if ((data + count)->score[inside] < 0)//åˆ¤æ–­æ˜¯å¦è¾“å…¥é”™è¯¯
-							{
-								cout << "  ã€æˆç»©ä¸èƒ½å°äº0ã€‘" << endl;
-							}
-						} while ((data + count)->score[inside] < 0);//å¦‚æœè¾“å…¥é”™è¯¯ï¼Œå°±ä¸€ç›´å¾ªç¯
-						(data + count)->average += (data + count)->score[inside];//è®¡ç®—æˆç»©çš„ç´¯åŠ å€¼
-					}
-					(data + count)->average /= (double)(M);//é™¤ä»¥è¯¾ç¨‹æ•°ï¼Œè®¡ç®—å­¦ç”Ÿçš„å¹³å‡æˆç»©
-					break;
-				case 'r':Window(0, 0, 80, 34); return; break;//ç›´æ¥ç»“æŸå‡½æ•°è°ƒç”¨ï¼Œè¿”å›ä¸»ç•Œé¢
-				case 'q':exit(0); break;//qåˆ™ç›´æ¥é€€å‡ºç³»ç»Ÿï¼Œè¿”å›å€¼0
-				default: error = true;//å¦åˆ™ï¼Œè¾“å…¥é”™è¯¯
-				}
-			} while (input_char != 'o' && input_char != 's' && input_char != 'n');//åˆ°æ­¤ï¼Œå‡½æ•°åŸºæœ¬ç»“æŸï¼Œè‹¥éè¾“å…¥è¿™ä¸‰ä¸ªå­—æ¯ï¼Œåˆ™ç»§ç»­å¾ªç¯
-		}
-		Window(0, 0, 80, 34);//æ—¥å¸¸bugé¢„é˜²ï¼Œé‡æ–°è®¾ç½®çª—å£å¤§å°
-	}
-	/*æ¨¡å—4::æˆç»©ä¿®æ”¹ç»“æŸ*/
-
-	/*æ¨¡å—5::æˆç»©ç»Ÿè®¡*/
-	void Statistics()//æˆç»©ç»Ÿè®¡
-	{
-		Title(TEXT("å­¦ç”Ÿæˆç»©ç®¡ç†ç³»ç»Ÿ::æˆç»©ç»Ÿè®¡"));//æ—¥è®¾ç½®æ ‡é¢˜
-		Window(0, 0, 64, 34);//è®¾ç½®çª—å£å¤§å°ä¸º64è¡Œ34åˆ—
-		Black_White();//æ›´æ–°å‰æ™¯è‰²ã€èƒŒæ™¯è‰²
-		Cls();//æ¸…å±
-		Hide_cursor();//éšè—å…‰æ ‡
-		double average(0.0);//å®šä¹‰å±€éƒ¨å˜é‡ï¼Œç”¨äºè¾“å‡ºå¹³å‡å€¼
-		int max_count(0), statistic(0);//å®šä¹‰æœ€å¤§å€¼åºå·ä¸ç»Ÿè®¡äººæ•°
-		if (data == NULL || subject == NULL)//æ—¥å¸¸æ ¡éªŒ
-		{
-			cout << "\nÂ·å°šæœªå½•å…¥å­¦ç”Ÿæ•°æ®ï¼Œå³å°†è¿”å›ä¸»èœå•..." << endl;
-			Pause(false);//æš‚åœå±å¹•è¾“å‡º
-		}
-		else
-		{
-			if (N != 0)//çœ‹æ˜¯å¦å…¨åˆ å¹²å‡€äº†
-			{
-				for (inside = 0; inside < M; inside++)//â€œå†…å±‚â€ä¸ºå…ˆï¼Œå› ä¸ºè¿™æ¬¡æ˜¯ä»¥è¯¾ç¨‹ä¸ºä¸»è§’ï¼Œä¸»è§’å¹¶ä¸æ˜¯å­¦ç”Ÿ
+				} while (input_int <= 0 || input_int > N_search);//Ğ£ÑéµÄÊÇN_search£¬¼´NµÄ×î´óÖµ£¬
+				Cls();//ÇåÆÁ
+				cout << "\n¡¤ĞŞ¸ÄĞòºÅÎª[ " << input_int << " ]µÄÑ§ÉúµÄÊı¾İ >> " << endl;
+				cout << "\n  Ô­Ñ§ºÅ£º" << (data + input_int - 1)->number << endl;
+				cout << "\n  Ô­ĞÕÃû£º" << (data + input_int - 1)->name << endl;
+				for (inside = 0; inside < M; inside++)
 				{
-					average = 0.0;//å¹³å‡å€¼éƒ½è¦ä»0å¼€å§‹è®¡ç®—
-					statistic = 0;//æ¯é—¨è¯¾ç¨‹éƒ½è¦ä»0å¼€å§‹è®¡æ•°
-					for (max_count = 0, count = 0; count < N; count++)//max_countå¾ªç¯ï¼Œè·å–æœ€å¤§å€¼ID
-					{
-						if ((data + max_count)->score[inside] < (data + count)->score[inside])//è¦æ˜¯æœ‰äººæ•¢æ¯”max_countçš„æˆç»©é«˜ï¼Œé‚£å¿…ç„¶è¦ç»™max_countèµ‹å€¼æœ€é«˜æˆç»©çš„åºå·
-						{
-							max_count = count;//å–å¾—æ¯é—¨è¯¾ç¨‹æˆç»©æœ€é«˜å­¦ç”Ÿçš„IDï¼Œç”¨ä»¥æ˜¾ç¤ºä¿¡æ¯
-						}
-						average += (data + count)->score[inside];//æ±‚ç´¯åŠ å’Œ
-					}
-					average /= (double)(N);//è®¡ç®—æ¯é—¨è¯¾ç¨‹çš„å¹³å‡æˆç»©ï¼Œä¸ç±»Dataä¸­çš„averageä¸åŒï¼Œè«è¦æ··æ·†
-					for (count = 0; count < N; count++)//ç»Ÿè®¡äººæ•°çš„å‹å–„å¾ªç¯
-					{
-						if ((data + count)->score[inside] > average)//è¦æ˜¯æœ‰å­¦ç”Ÿçš„æˆç»©æ¯”å¹³å‡å€¼å¤§ï¼Œåˆ™è®¡æ•°
-						{
-							statistic++;//ç»Ÿè®¡è¶…è¿‡æ¯é—¨è¯¾ç¨‹å¹³å‡æˆç»©çš„å­¦ç”Ÿäººæ•°
-						}
-					}//ä¸‹é¢æ¸…ä¸€è‰²å…¨æ˜¯è¾“å‡º
-					cout << "\nÂ·è¯¾ç¨‹ã€" << *(subject + inside) << "ã€‘çš„æœ€é«˜æˆç»©ï¼š" << (data + max_count)->score[inside] << endl;
-					cout << "\n  å±åºå·ä¸º[ " << max_count + 1 << " ]çš„å­¦ç”Ÿ >> " << endl;
-					cout << "\n  å­¦å·ï¼š" << (data + max_count)->number << endl;
-					cout << "\n  å§“åï¼š" << (data + max_count)->name << endl;
-					for (int temp(0); temp < M; temp++)//å¾ªç¯è¾“å‡ºæˆç»©
-					{
-						cout << "\n  è¯¾ç¨‹ã€" << *(subject + temp) << "ã€‘çš„æˆç»©ï¼š" << (data + max_count)->score[inside] << endl;
-					}
-					cout << "\n  å„ç§‘å¹³å‡æˆç»©ï¼š" << (data + max_count)->average << endl;
-					cout << "\nÂ·è¯¾ç¨‹ã€" << *(subject + inside) << "ã€‘çš„å¹³å‡æˆç»©ï¼š" << average << endl;
-					cout << "\nÂ·è¶…è¿‡è¯¾ç¨‹ã€" << *(subject + inside) << "ã€‘å¹³å‡æˆç»©çš„å­¦ç”Ÿäººæ•°ï¼š" << statistic << endl;
-					cout << "\n";
+					cout << "\n  ¿Î³Ì¡¾" << *(subject + inside) << "¡¿µÄÔ­³É¼¨£º" << (data + input_int - 1)->score[inside] << endl;
 				}
-			}
-			else//çœ‹æ•°æ®æ˜¯å¦å…¨è¢«åˆ äº†ï¼Œå…¨è¢«åˆ äº†çš„è¯ï¼Œå°±æ˜¾ç¤ºå·²å…¨åˆ 
-			{
-				cout << "\nÂ·æ•°æ®å·²å…¨éƒ¨æ ‡è®°ä¸ºåˆ é™¤" << endl;
-			}
-			Pause(false);//æš‚åœå±å¹•æ˜¾ç¤ºä»¥ç­‰å¾…ä¸‹ä¸€æ­¥æ“ä½œ
-		}
-		Window(0, 0, 80, 34);//é¢„é˜²bugï¼Œé‡æ–°è®¾ç½®çª—å£å¤§å°
-	}
-	/*æ¨¡å—5::æˆç»©ç»Ÿè®¡ç»“æŸ*/
-
-	/*ç³»ç»Ÿæ¶æ„::æˆç»©ä¿å­˜&&å…³äºä¿¡æ¯*/
-	void Save_About(int argc, char** argv)//ä¿å­˜æˆç»©ä¸è¾“å‡ºå…³äºä¿¡æ¯
-	{
-		//system("mode con cols=80 lines=32");//æ”¹å˜å®½é«˜ï¼Œæœ€å¼€å§‹çš„ç”¨æ³•ï¼Œå› è°ƒç”¨Windows APIï¼Œæ•…ç°å·²åºŸå¼ƒ
-		//system("color f0");//æ”¹å˜é¢œè‰²ï¼Œæœ€å¼€å§‹çš„ç”¨æ³•ï¼Œå› è°ƒç”¨Windows APIï¼Œæ•…ç°å·²åºŸå¼ƒ
-		//system("title å­¦ç”Ÿæˆç»©ç®¡ç†ç³»ç»Ÿ::å…³äº");//æ›´æ–°æ ‡é¢˜ï¼Œæœ€å¼€å§‹çš„ç”¨æ³•ï¼Œå› è°ƒç”¨Windows APIï¼Œæ•…ç°å·²åºŸå¼ƒ
-		Title(TEXT("å­¦ç”Ÿæˆç»©ç®¡ç†ç³»ç»Ÿ::æˆç»©ä¿å­˜&&å…³äº"));//è°ƒç”¨Titleå‡½æ•°è®¾ç½®å­ç•Œé¢çš„æ ‡é¢˜
-		Window(0, 0, 80, 34);//è®¾ç½®çª—å£å¤§å°
-		Purple();//ç™½è‰²èƒŒæ™¯ï¼Œç´«è‰²å­—ä½“
-		Cls();//æ¸…å±
-		cout << "\nÂ·æ­£åœ¨ä¿å­˜..." << endl;//æ”¹ä¸ºç´«è‰²å­—ä½“
-		Black();//ç™½è‰²èƒŒæ™¯ï¼Œç¼ºçœé»‘è‰²å­—ä½“
-		if (data == NULL || subject == NULL || N == 0)//å¦‚æœæŒ‡é’ˆä¸ºç©ºæˆ–è€…Nä¸º0ï¼Œè¯´æ˜æ²¡æœ‰å½•å…¥æˆç»©æˆ–è€…å·²ç»å…¨éƒ¨åˆ é™¤ï¼Œè°ƒç”¨Windows APIå¼¹å‡ºæç¤ºä¿¡æ¯
-		{
-			MessageBox(GetConsoleWindow(), TEXT("å°šæœªå½•å…¥å­¦ç”Ÿæ•°æ®æˆ–æ•°æ®å·²å…¨éƒ¨åˆ é™¤ï¼Œæ— æ³•ä¿å­˜ã€‚"), TEXT("ä¿å­˜å¤±è´¥"), MB_OK | MB_ICONEXCLAMATION | MB_DEFBUTTON1);
-		}
-		else//å¦åˆ™ï¼Œä¾¿æ˜¯å·²ç»å½•å…¥æˆç»©
-		{
-			time_t now = time(0);//è·å–å½“å‰æ—¶é—´
-			char time[100];//å®šä¹‰å­—ç¬¦æ•°ç»„ï¼Œç”¨äºå­˜å‚¨æ—¶é—´å­—ç¬¦ä¸²
-			ctime_s(time, 100, &now);//å°†æ—¶é—´æ ¼å¼åŒ–ä¸ºå­—ç¬¦ä¸²
-			ofstream outfile;//åˆ›å»ºè¾“å‡ºæ–‡ä»¶æµå¯¹è±¡
-			outfile.open("å­¦ç”Ÿæˆç»©ä¿¡æ¯.txt", ios_base::out | ios_base::app);//ä»¥è¾“å‡ºæ–¹å¼æ‰“å¼€æ–‡ä»¶ï¼Œæ— åˆ™åˆ›å»ºï¼Œè‹¥å·²æœ‰åŸæ–‡ä»¶åˆ™æ–°æ•°æ®æ·»åŠ åœ¨æœ«å°¾
-			if (!outfile)//åˆ›å»ºæ–‡ä»¶å¤±è´¥ï¼Œè‚¯å®šæ˜¯æ²¡ç»™ç®¡ç†å‘˜æƒé™ï¼Œé‚£è¿˜äº†å¾—ï¼Œå¿…é¡»å¼¹å‡ºå¯¹è¯æ¡†æé†’
-			{
-				MessageBox(GetConsoleWindow(), TEXT("åˆ›å»ºæ–‡ä»¶å¤±è´¥ï¼è¯·ä»¥ç®¡ç†å‘˜èº«ä»½è¿è¡Œæ­¤ç¨‹åºã€‚"), TEXT("åˆ›å»ºå¤±è´¥"), MB_OK | MB_ICONHAND | MB_DEFBUTTON1);
-			}
-			else//å¦åˆ™ï¼Œä¸€åˆ‡é¡ºåˆ©
-			{
-				outfile << "ã€ä¿å­˜æ—¶é—´ã€‘" << time;//å†™å…¥
-				for (count = 0; count < N; count++)//å¤–å±‚å¾ªç¯éå†å­¦ç”Ÿæ•°æ®ä¿å­˜
+				if (IDOK == MessageBox(GetConsoleWindow(), TEXT("ÊÇ·ñÉ¾³ı¸ÃÑ§ÉúµÄÊı¾İ£¿"), TEXT("É¾³ı²Ù×÷"), MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2))
 				{
-					outfile << "\nÂ·åºå·ä¸º[ " << count + 1 << " ]çš„å­¦ç”Ÿçš„ >> " << endl;
-					outfile << "\n  å­¦å·ï¼š" << (data + count)->number << endl;//ä¿å­˜å­¦å·
-					outfile << "\n  å§“åï¼š" << (data + count)->name << endl;//ä¿å­˜å§“å
-					for (inside = 0; inside < M; inside++)//å†…å±‚å¾ªç¯éå†è¯¾ç¨‹ä¿å­˜
+					//µ÷ÓÃWindows APIµ¯³ö¶Ô»°¿ò£¬È±Ê¡ÖµÎªÈ¡Ïû
+					(data + input_int - 1)->delete_mark = true;
+					for (int temp = input_int - 1; temp < N - 1; temp++)//Ã°ÅİÅÅĞò·¨½«´øÓĞÉ¾³ı±ê¼ÇµÄÀà·ÅÔÚ×îºó
 					{
-						outfile << "\n  è¯¾ç¨‹ã€" << *(subject + inside) << "ã€‘çš„æˆç»©ï¼š" << (data + count)->score[inside] << endl;//ä¿å­˜æˆç»©
+						swap = *(data + temp);//Ç§ÆªÒ»ÂÉµÄ½»»»²Ù×÷
+						*(data + temp) = *(data + temp + 1);
+						*(data + temp + 1) = swap;
 					}
-					outfile << "\n  å¹³å‡æˆç»©ï¼š" << (data + count)->average << endl;//ä¿å­˜å¹³å‡æˆç»©
+					N--;//Ñ§Éú¸öÊı¼õÒ»
+					Window(0, 0, 80, 34);//½áÊøº¯Êıµ÷ÓÃÇ°£¬±ØĞëÖØĞÂµ÷Õû´°¿Ú£¬·ñÔò³öÏÖbug
+					return;//ÈôÖµÎªÈ·¶¨£¬É¾³ıºóÔò´Ëº¯Êıµ÷ÓÃ½áÊø
 				}
-				outfile << "\n==================================\n" << endl;//ä½œä¸ºåˆ†éš”ç¬¦
-				MessageBox(GetConsoleWindow(), TEXT("ä¿å­˜æ•°æ®æˆåŠŸï¼"), TEXT("ä¿å­˜æˆåŠŸ"), MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1);//å¼¹å‡ºæˆåŠŸä¿¡æ¯
-				outfile.close();//å…³é—­è¾“å‡ºæ–‡ä»¶
+				else//·ñÔòÈç¹ûÖµÎªÈ¡ÏûµÄ»°
+				{
+					if ((data + input_int - 1)->delete_mark == true)//ÄæÉ¾³ı²Ù×÷
+					{
+						(data + input_int - 1)->delete_mark = false;//Êı¾İ»Ø´º´ó·¨
+						N++;//Ñ§Éú¸öÊı+1£¬yeah
+					}
+				}
+				cout << "\n¡¤Ñ§ºÅĞŞ¸ÄÎª£º";
+				cin >> (data + input_int - 1)->number;//ÊäÈëÑ§ºÅ
+				cout << "\n¡¤ĞÕÃûĞŞ¸ÄÎª£º";
+				cin >> (data + input_int - 1)->name;//ÊäÈëĞÕÃû
+				(data + input_int - 1)->average = 0.0;//Ñ§ÉúµÄÆ½¾ùÖµ¸³ÖµÎª0.0
+				for (inside = 0; inside < M; inside++)//Ñ­»·ĞŞ¸Ä¿Î³ÌĞÅÏ¢
+				{
+					do {//Ò»Èç¼ÈÍùdoÑ­»·£¬äÆ£¡
+						cout << "\n¡¤¿Î³Ì¡¾" << *(subject + inside) << "¡¿µÄ³É¼¨ĞŞ¸ÄÎª£º";
+						cin >> (data + input_int - 1)->score[inside];//ÊäÈë³É¼¨
+						cin.clear();//ĞŞÕıÊäÈë¶à¸ö×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©
+						cin.ignore(1024, '\n');//ĞŞÕıÊäÈë¶à¸ö×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©
+						if ((data + input_int - 1)->score[inside] < 0)//Ò»Èç¼ÈÍùµÄĞ£Ñé²Ù×÷
+						{
+							cout << "  ¡¾³É¼¨²»ÄÜĞ¡ÓÚ0¡¿" << endl;
+						}
+					} while ((data + input_int - 1)->score[inside] < 0);//ÊìÏ¤µÄwhileÑ­»·
+					(data + input_int - 1)->average += (data + input_int - 1)->score[inside];//ÀÛ¼ÓºÍ
+				}
+				(data + input_int - 1)->average /= (double)(M);//ÀÛ¼ÓÍêÁËÖ®ºóÖ±½Ó³ı£¬ËãÆ½¾ùÖµ
+				break;
+			case 's'://Ñ§ºÅ
+				do
+				{
+					Display_cursor();//ÏÔÊ¾¹â±ê
+					Cls();//ÇåÆÁ£¬ÆäÊµÕı³£ÔÚÕâÀïÓ¦µ±ÁĞ³öËùÓĞÑ§ºÅ£¬µ«ÊÇÎÒÀÁµÃ¼Ó
+					if (error == false)//Èç¹ûÊäÈëÕıÈ·£¬Õı³£ÊäÈë
+					{
+						cout << "\n¡¤ÇëÊäÈë¼ìË÷Ñ§ºÅ£º";
+					}
+					else//Èç¹ûÊäÈë´íÎó£¬¾Í·µ»Ø
+					{
+						Black_Red();//ÉèÖÃ×ÖÌåÑÕÉ«ÎªºìÉ«
+						cout << "\n  ¡¾ÊäÈë´íÎó¡¿¼´½«·µ»ØÖ÷²Ëµ¥...";
+						Black_White();//ÉèÖÃ×ÖÌåÑÕÉ«Îª°×É«
+						error = false;
+						Pause(false);
+						return;
+					}
+					cin >> input_string;//ÊäÈë×Ö·û´®£¬ÓÃÒÔ¶Ô±ÈÅĞ¶Ï
+					error = true;//±ÂËµ±ğµÄ£¬ÏÈ¸øÀ´¸öerrorÔÙËµ
+					for (count = 0; count < N_search; count++)
+					{
+						if (input_string == (data + count)->number)//Ö»ÓĞÊäÈëµÄ×Ö·û´®ÄÜÕÒµ½
+						{
+							error = false;//²ÅÄÜ½â³ıerror£¬·ñÔòerror==true¾ÍÒ»Ö±Ñ­»·Ò»Ö±Ñ­»·
+							break;
+						}
+					}
+				} while (error != false);//»òÕß¿ÉÒÔÖ±½ÓÅĞ¶Ïinput_string != (data + count)->number
+				Cls();//ÇåÆÁ
+				cout << "\n¡¤ĞŞ¸ÄĞòºÅÎª[ " << count + 1 << " ]µÄÑ§ÉúµÄÊı¾İ >> " << endl;
+				cout << "\n  Ô­Ñ§ºÅ£º" << (data + count)->number << endl;
+				cout << "\n  Ô­ĞÕÃû£º" << (data + count)->name << endl;
+				for (inside = 0; inside < M; inside++)
+				{
+					cout << "\n  ¿Î³Ì¡¾" << *(subject + inside) << "¡¿µÄÔ­³É¼¨£º" << (data + count)->score[inside] << endl;
+				}
+				if (IDOK == MessageBox(GetConsoleWindow(), TEXT("ÊÇ·ñÉ¾³ı¸ÃÑ§ÉúµÄÊı¾İ£¿"), TEXT("É¾³ı²Ù×÷"), MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2))
+				{
+					//µ÷ÓÃWindows APIµ¯³ö¶Ô»°¿ò£¬È±Ê¡ÖµÎªÈ¡Ïû
+					(data + count)->delete_mark = true;
+					for (int temp = count; temp < N - 1; temp++)//Ã°ÅİÅÅĞò·¨½«´øÓĞÉ¾³ı±ê¼ÇµÄÀà·ÅÔÚ×îºó
+					{
+						swap = *(data + temp);//ÒÀÈ»½»»»²Ù×÷
+						*(data + temp) = *(data + temp + 1);
+						*(data + temp + 1) = swap;
+					}
+					N--;//Ñ§Éú¸öÊı¼õÒ»
+					Window(0, 0, 80, 34);//±ØĞëÖØĞÂµ÷Õû´°¿Ú£¬·ñÔò³öÏÖbug
+					return;//ÈôÖµÎªÈ·¶¨£¬É¾³ıºóÔò´Ëº¯Êıµ÷ÓÃ½áÊø
+				}
+				else//·ñÔòÈç¹ûÖµÎªÈ¡ÏûµÄ»°
+				{
+					if ((data + count)->delete_mark == true)//ÄæÉ¾³ı²Ù×÷£¬²»±Ø¶àËµ
+					{
+						(data + count)->delete_mark = false;//½«É¾³ı±ê¼Ç¸ÄÎª¼Ù£¬È¡ÏûÉ¾³ı
+						N++;//Ñ§Éú¸öÊı¼ÓÒ»
+					}
+				}
+				cout << "\n¡¤Ñ§ºÅĞŞ¸ÄÎª£º";
+				cin >> (data + count)->number;//Â¼ÈëÑ§ºÅ
+				cout << "\n¡¤ĞÕÃûĞŞ¸ÄÎª£º";
+				cin >> (data + count)->name;//Â¼ÈëĞÕÃû
+				(data + count)->average = 0.0;//ÈÃÆ½¾ùÖµÖØÖÃÎª0
+				for (inside = 0; inside < M; inside++)//ĞŞ¸Ä¿Î³Ì³É¼¨
+				{
+					do {
+						cout << "\n¡¤¿Î³Ì¡¾" << *(subject + inside) << "¡¿µÄ³É¼¨ĞŞ¸ÄÎª£º";
+						cin >> (data + count)->score[inside];//ÊäÈë³É¼¨
+						cin.clear();//ĞŞÕıÊäÈë¶à¸ö×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©
+						cin.ignore(1024, '\n');//ĞŞÕıÊäÈë¶à¸ö×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©
+						if ((data + count)->score[inside] < 0)//Ğ£Ñé³É¼¨ÊÇ·ñĞ¡ÓÚ0
+						{
+							cout << "  ¡¾³É¼¨²»ÄÜĞ¡ÓÚ0¡¿" << endl;
+						}
+					} while ((data + count)->score[inside] < 0);//Èô³É¼¨Ğ¡ÓÚ0£¬¾ÍÊäÈë´íÎó£¬Ò»Ö±Ñ­»·Ö±µ½ÊäÈëÕıÈ·
+					(data + count)->average += (data + count)->score[inside];//ÀÛ¼Ó¼ÆËã³É¼¨µÄºÍ
+				}
+				(data + count)->average /= (double)(M);//ÀÛ¼ÓÍê³Éºó³ı£¬¼ÆËãÆ½¾ùÖµ
+				break;
+			case 'n'://ĞÕÃû
+				do
+				{
+					Display_cursor();//ÏÔÊ¾¹â±ê
+					Cls();//ÇåÆÁ£¬ÆäÊµÕı³£ÔÚÕâÀïÓ¦µ±ÁĞ³öËùÓĞÑ§ºÅ£¬µ«ÊÇÎÒÀÁµÃ¼Ó
+					if (error == false)//Èç¹ûerrorÎª¼ÙËµÃ÷ÊäÈëÕıÈ·
+					{
+						cout << "\n¡¤ÇëÊäÈë¼ìË÷ĞÕÃû£º";
+					}
+					else//·ñÔòÊäÈë´íÎó
+					{
+						Black_Red();
+						cout << "\n  ¡¾ÊäÈë´íÎó¡¿¼´½«·µ»ØÖ÷²Ëµ¥...";//¸ü¸Ä×ÖÌåÑÕÉ«ÎªºìÉ«£¬ºó¸ÄÎª°×É«
+						Black_White();
+						error = false;//´Ë´Îerror½áÊø£¬¸³ÖµÎª¼Ù
+						Pause(false);
+						return;
+					}
+					cin >> input_string;//ÊäÈëÒ»¸ö×Ö·û´®ÓÃÓÚ¼ìË÷
+					error = true;
+					for (count = 0; count < N_search; count++)//´Ó0µ½×î´óÑ§ÉúÈËÊı¿ªÊ¼¼ìË÷
+					{
+						if (input_string == (data + count)->name)//Èç¹ûÏàµÈ
+						{
+							error = false;//²Å½«error¸ÄÎª¼Ù£¬¼´ÕÒµ½ÁËÆ¥ÅäµÄ×Ö·û´®
+							break;
+						}
+					}
+				} while (error != false);//»òÕß¿ÉÒÔÖ±½ÓÅĞ¶Ïinput_string != (data + count)->name
+				Cls();//ÇåÆÁ
+				cout << "\n¡¤ĞŞ¸ÄĞòºÅÎª[ " << count + 1 << " ]µÄÑ§ÉúµÄÊı¾İ >> " << endl;
+				cout << "\n  Ô­Ñ§ºÅ£º" << (data + count)->number << endl;
+				cout << "\n  Ô­ĞÕÃû£º" << (data + count)->name << endl;
+				for (inside = 0; inside < M; inside++)//Êä³ö¿Î³ÌÔ­³É¼¨
+				{
+					cout << "\n  ¿Î³Ì¡¾" << *(subject + inside) << "¡¿µÄÔ­³É¼¨£º" << (data + count)->score[inside] << endl;
+				}
+				if (IDOK == MessageBox(GetConsoleWindow(), TEXT("ÊÇ·ñÉ¾³ı¸ÃÑ§ÉúµÄÊı¾İ£¿"), TEXT("É¾³ı²Ù×÷"), MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2))
+				{
+					//µ÷ÓÃWindows APIµ¯³ö¶Ô»°¿ò£¬Ä¬ÈÏÖµÎªÈ¡Ïû
+					(data + count)->delete_mark = true;
+					for (int temp = count; temp < N - 1; temp++)//Ã°ÅİÅÅĞò·¨½«´øÓĞÉ¾³ı±ê¼ÇµÄÀà·ÅÔÚ×îºó
+					{
+						swap = *(data + temp);//½»»»Ñ§ÉúÊı¾İ
+						*(data + temp) = *(data + temp + 1);
+						*(data + temp + 1) = swap;
+					}
+					N--;//Ñ§Éú¸öÊı¼õÒ»
+					Window(0, 0, 80, 34);//±ØĞëÖØĞÂµ÷Õû´°¿Ú£¬·ñÔò³öÏÖbug
+					return;//ÈôÖµÎªÈ·¶¨£¬É¾³ıºóÔò´Ëº¯Êıµ÷ÓÃ½áÊø
+				}
+				else
+				{
+					if ((data + count)->delete_mark == true)//ÄæÉ¾³ı
+					{
+						(data + count)->delete_mark = false;//½«É¾³ı±ê¼Ç¸ÄÎª¼Ù£¬È¡ÏûÉ¾³ı²Ù×÷
+						N++;//Ñ§ÉúÈËÊı+1
+					}
+				}
+				cout << "\n¡¤Ñ§ºÅĞŞ¸ÄÎª£º";
+				cin >> (data + count)->number;//ÊäÈëÑ§ºÅ
+				cout << "\n¡¤ĞÕÃûĞŞ¸ÄÎª£º";
+				cin >> (data + count)->name;//ÊäÈëĞÕÃû
+				(data + count)->average = 0.0;//Æ½¾ùÖµÒÀÈ»´Ó0¿ªÊ¼
+				for (inside = 0; inside < M; inside++)//±éÀú¿Î³Ì
+				{
+					do {
+						cout << "\n¡¤¿Î³Ì¡¾" << *(subject + inside) << "¡¿µÄ³É¼¨ĞŞ¸ÄÎª£º";
+						cin >> (data + count)->score[inside];//Â¼Èë³É¼¨ĞŞ¸Ä
+						cin.clear();//ĞŞÕıÊäÈë¶à¸ö×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©
+						cin.ignore(1024, '\n');//ĞŞÕıÊäÈë¶à¸ö×ÖÄ¸ÒıÆğµÄcrash£¨±ÀÀ££©
+						if ((data + count)->score[inside] < 0)//ÅĞ¶ÏÊÇ·ñÊäÈë´íÎó
+						{
+							cout << "  ¡¾³É¼¨²»ÄÜĞ¡ÓÚ0¡¿" << endl;
+						}
+					} while ((data + count)->score[inside] < 0);//Èç¹ûÊäÈë´íÎó£¬¾ÍÒ»Ö±Ñ­»·
+					(data + count)->average += (data + count)->score[inside];//¼ÆËã³É¼¨µÄÀÛ¼ÓÖµ
+				}
+				(data + count)->average /= (double)(M);//³ıÒÔ¿Î³ÌÊı£¬¼ÆËãÑ§ÉúµÄÆ½¾ù³É¼¨
+				break;
+			case 'r':Window(0, 0, 80, 34); return; break;//Ö±½Ó½áÊøº¯Êıµ÷ÓÃ£¬·µ»ØÖ÷½çÃæ
+			case 'q':exit(0); break;//qÔòÖ±½ÓÍË³öÏµÍ³£¬·µ»ØÖµ0
+			default: error = true;//·ñÔò£¬ÊäÈë´íÎó
+			}
+		} while (input_char != 'o' && input_char != 's' && input_char != 'n');//µ½´Ë£¬º¯Êı»ù±¾½áÊø£¬Èô·ÇÊäÈëÕâÈı¸ö×ÖÄ¸£¬Ôò¼ÌĞøÑ­»·
+
+		Window(0, 0, 80, 34);//ÈÕ³£bugÔ¤·À£¬ÖØĞÂÉèÖÃ´°¿Ú´óĞ¡
+	}
+	/*Ä£¿é4::³É¼¨ĞŞ¸Ä½áÊø*/
+
+	/*Ä£¿é5::³É¼¨Í³¼Æ*/
+	void Statistics()//³É¼¨Í³¼Æ
+	{
+		Title(TEXT("Ñ§Éú³É¼¨¹ÜÀíÏµÍ³::³É¼¨Í³¼Æ"));//ÈÕÉèÖÃ±êÌâ
+		Window(0, 0, 80, 34);//ÉèÖÃ´°¿Ú´óĞ¡Îª80ĞĞ34ÁĞ
+		Black_White();//¸üĞÂÇ°¾°É«¡¢±³¾°É«
+		Cls();//ÇåÆÁ
+		Hide_cursor();//Òş²Ø¹â±ê
+		double average(0.0);//¶¨Òå¾Ö²¿±äÁ¿£¬ÓÃÓÚÊä³öÆ½¾ùÖµ
+		int max_count(0), statistic(0);//¶¨Òå×î´óÖµĞòºÅÓëÍ³¼ÆÈËÊı
+		if (data == NULL || subject == NULL)//ÈÕ³£Ğ£Ñé
+		{
+			cout << "\n¡¤ÉĞÎ´Â¼ÈëÑ§ÉúÊı¾İ£¬¼´½«·µ»ØÖ÷²Ëµ¥..." << endl;
+			Pause(false);//ÔİÍ£ÆÁÄ»Êä³ö
+			return;
+		}
+		if (N != 0)//¿´ÊÇ·ñÈ«É¾¸É¾»ÁË
+		{
+			for (inside = 0; inside < M; inside++)//¡°ÄÚ²ã¡±ÎªÏÈ£¬ÒòÎªÕâ´ÎÊÇÒÔ¿Î³ÌÎªÖ÷½Ç£¬Ö÷½Ç²¢²»ÊÇÑ§Éú
+			{
+				average = 0.0;//Æ½¾ùÖµ¶¼Òª´Ó0¿ªÊ¼¼ÆËã
+				statistic = 0;//Ã¿ÃÅ¿Î³Ì¶¼Òª´Ó0¿ªÊ¼¼ÆÊı
+				for (max_count = 0, count = 0; count < N; count++)//max_countÑ­»·£¬»ñÈ¡×î´óÖµID
+				{
+					if ((data + max_count)->score[inside] < (data + count)->score[inside])//ÒªÊÇÓĞÈË¸Ò±Èmax_countµÄ³É¼¨¸ß£¬ÄÇ±ØÈ»Òª¸ømax_count¸³Öµ×î¸ß³É¼¨µÄĞòºÅ
+					{
+						max_count = count;//È¡µÃÃ¿ÃÅ¿Î³Ì³É¼¨×î¸ßÑ§ÉúµÄID£¬ÓÃÒÔÏÔÊ¾ĞÅÏ¢
+					}
+					average += (data + count)->score[inside];//ÇóÀÛ¼ÓºÍ
+				}
+				average /= (double)(N);//¼ÆËãÃ¿ÃÅ¿Î³ÌµÄÆ½¾ù³É¼¨£¬ÓëÀàDataÖĞµÄaverage²»Í¬£¬ÄªÒª»ìÏı
+				for (count = 0; count < N; count++)//Í³¼ÆÈËÊıµÄÓÑÉÆÑ­»·
+				{
+					if ((data + count)->score[inside] > average)//ÒªÊÇÓĞÑ§ÉúµÄ³É¼¨±ÈÆ½¾ùÖµ´ó£¬Ôò¼ÆÊı
+					{
+						statistic++;//Í³¼Æ³¬¹ıÃ¿ÃÅ¿Î³ÌÆ½¾ù³É¼¨µÄÑ§ÉúÈËÊı
+					}
+				}//ÏÂÃæÇåÒ»É«È«ÊÇÊä³ö
+				cout << "\n¡¤¿Î³Ì¡¾" << *(subject + inside) << "¡¿µÄ×î¸ß³É¼¨£º" << (data + max_count)->score[inside] << endl;
+				cout << "\n  ÊôĞòºÅÎª[ " << max_count + 1 << " ]µÄÑ§Éú >> " << endl;
+				cout << "\n  Ñ§ºÅ£º" << (data + max_count)->number << endl;
+				cout << "\n  ĞÕÃû£º" << (data + max_count)->name << endl;
+				for (int temp(0); temp < M; temp++)//Ñ­»·Êä³ö³É¼¨
+				{
+					cout << "\n  ¿Î³Ì¡¾" << *(subject + temp) << "¡¿µÄ³É¼¨£º" << (data + max_count)->score[inside] << endl;
+				}
+				cout << "\n  ¸÷¿ÆÆ½¾ù³É¼¨£º" << (data + max_count)->average << endl;
+				cout << "\n¡¤¿Î³Ì¡¾" << *(subject + inside) << "¡¿µÄÆ½¾ù³É¼¨£º" << average << endl;
+				cout << "\n¡¤³¬¹ı¿Î³Ì¡¾" << *(subject + inside) << "¡¿Æ½¾ù³É¼¨µÄÑ§ÉúÈËÊı£º" << statistic << endl;
+				cout << "\n";
 			}
 		}
-		do//do-whileå¾ªç¯ï¼Œå…ˆæ‰§è¡Œä¸€æ¬¡
+		else//¿´Êı¾İÊÇ·ñÈ«±»É¾ÁË£¬È«±»É¾ÁËµÄ»°£¬¾ÍÏÔÊ¾ÒÑÈ«É¾
 		{
-			Purple();//ç™½è‰²èƒŒæ™¯ï¼Œç´«è‰²å­—ä½“
-			Cls();//æ¸…å±
-			cout << "\n\n\n\t\t\t\t    [ å…³äº ]" << endl;//æ”¹ä¸ºç´«è‰²å­—ä½“
-			Black();//ç™½è‰²èƒŒæ™¯ï¼Œç¼ºçœé»‘è‰²å­—ä½“
-			cout << "\n\n\t\t\tã€ç¨‹åºç‰ˆæœ¬ã€‘1.1.99.275" << endl;//è‡ªå®šä¹‰ç‰ˆæœ¬å·
-			cout << "\n\n\t\t\tã€ç¨‹åºå‚æ•°ã€‘" << argc << endl;//è°ƒç”¨ç¨‹åºæ—¶ï¼Œæœ‰æ— é™„å¸¦è¾“å…¥çš„å‚æ•°
-			cout << "\n\n\t\t\tã€ç¨‹åºè·¯å¾„ã€‘" << *argv << endl;//è¾“å‡ºç¨‹åºè·¯å¾„
-			cout << "\n\n\t\t\tã€ç¼–è¯‘å·¥å…·ã€‘Microsoft Visual Studio" << endl;//è‡ªå®šä¹‰ç¼–è¯‘å·¥å…·
-			cout << "\n\n\t\t\tã€ç‰ˆæƒæ‰€å±ã€‘CaseClosedX@outlook.com" << endl;//ç‰ˆæƒä¿¡æ¯
-			cout << "\n\n\t\t\t\tã€rã€‘è¿”å›ä¸»ç•Œé¢" << endl;
-			cout << "\n\n\t\t\t\tã€qã€‘é€€å‡ºç³»ç»Ÿ" << endl;
-			if (error == true)//catché”™è¯¯ï¼Œè°ƒç”¨å‡½æ•°
+			cout << "\n¡¤Êı¾İÒÑÈ«²¿±ê¼ÇÎªÉ¾³ı" << endl;
+		}
+		Pause(false);//ÔİÍ£ÆÁÄ»ÏÔÊ¾ÒÔµÈ´ıÏÂÒ»²½²Ù×÷
+
+		Window(0, 0, 80, 34);//Ô¤·Àbug£¬ÖØĞÂÉèÖÃ´°¿Ú´óĞ¡
+	}
+	/*Ä£¿é5::³É¼¨Í³¼Æ½áÊø*/
+
+	/*ÏµÍ³¼Ü¹¹::³É¼¨±£´æ*/
+	void Save()//±£´æ³É¼¨
+	{
+		//system("mode con cols=80 lines=32");//¸Ä±ä¿í¸ß£¬×î¿ªÊ¼µÄÓÃ·¨£¬Òòµ÷ÓÃWindows API£¬¹ÊÏÖÒÑ·ÏÆú
+		//system("color f0");//¸Ä±äÑÕÉ«£¬×î¿ªÊ¼µÄÓÃ·¨£¬Òòµ÷ÓÃWindows API£¬¹ÊÏÖÒÑ·ÏÆú
+		//system("title Ñ§Éú³É¼¨¹ÜÀíÏµÍ³::¹ØÓÚ");//¸üĞÂ±êÌâ£¬×î¿ªÊ¼µÄÓÃ·¨£¬Òòµ÷ÓÃWindows API£¬¹ÊÏÖÒÑ·ÏÆú
+		Title(TEXT("Ñ§Éú³É¼¨¹ÜÀíÏµÍ³::³É¼¨±£´æ"));//µ÷ÓÃTitleº¯ÊıÉèÖÃ×Ó½çÃæµÄ±êÌâ
+		Window(0, 0, 80, 34);//ÉèÖÃ´°¿Ú´óĞ¡
+		Purple();//°×É«±³¾°£¬×ÏÉ«×ÖÌå
+		Cls();//ÇåÆÁ
+		cout << "\n¡¤ÕıÔÚ±£´æ..." << endl;//¸ÄÎª×ÏÉ«×ÖÌå
+		Black();//°×É«±³¾°£¬È±Ê¡ºÚÉ«×ÖÌå
+		if (data == NULL || subject == NULL || N == 0)//Èç¹ûÖ¸ÕëÎª¿Õ»òÕßNÎª0£¬ËµÃ÷Ã»ÓĞÂ¼Èë³É¼¨»òÕßÒÑ¾­È«²¿É¾³ı£¬µ÷ÓÃWindows APIµ¯³öÌáÊ¾ĞÅÏ¢
+		{
+			MessageBox(GetConsoleWindow(), TEXT("ÉĞÎ´Â¼ÈëÑ§ÉúÊı¾İ»òÊı¾İÒÑÈ«²¿É¾³ı£¬ÎŞ·¨±£´æ¡£"), TEXT("±£´æÊ§°Ü"), MB_OK | MB_ICONEXCLAMATION | MB_DEFBUTTON1);
+			return;
+		}
+
+		time_t now = time(0);//»ñÈ¡µ±Ç°Ê±¼ä
+		char time[100];//¶¨Òå×Ö·ûÊı×é£¬ÓÃÓÚ´æ´¢Ê±¼ä×Ö·û´®
+		ctime_s(time, 100, &now);//½«Ê±¼ä¸ñÊ½»¯Îª×Ö·û´®
+		ofstream outfile;//´´½¨Êä³öÎÄ¼şÁ÷¶ÔÏó
+		outfile.open("Ñ§Éú³É¼¨ĞÅÏ¢.txt", ios_base::out | ios_base::app);//ÒÔÊä³ö·½Ê½´ò¿ªÎÄ¼ş£¬ÎŞÔò´´½¨£¬ÈôÒÑÓĞÔ­ÎÄ¼şÔòĞÂÊı¾İÌí¼ÓÔÚÄ©Î²
+		if (!outfile)//´´½¨ÎÄ¼şÊ§°Ü£¬¿Ï¶¨ÊÇÃ»¸ø¹ÜÀíÔ±È¨ÏŞ£¬ÄÇ»¹ÁËµÃ£¬±ØĞëµ¯³ö¶Ô»°¿òÌáĞÑ
+		{
+			MessageBox(GetConsoleWindow(), TEXT("´´½¨ÎÄ¼şÊ§°Ü£¡ÇëÒÔ¹ÜÀíÔ±Éí·İÔËĞĞ´Ë³ÌĞò¡£"), TEXT("´´½¨Ê§°Ü"), MB_OK | MB_ICONHAND | MB_DEFBUTTON1);
+		}
+		else//·ñÔò£¬Ò»ÇĞË³Àû
+		{
+			outfile << "¡¾±£´æÊ±¼ä¡¿" << time;//Ğ´Èë
+			for (count = 0; count < N; count++)//Íâ²ãÑ­»·±éÀúÑ§ÉúÊı¾İ±£´æ
+			{
+				outfile << "\n¡¤ĞòºÅÎª[ " << count + 1 << " ]µÄÑ§ÉúµÄ >> " << endl;
+				outfile << "\n  Ñ§ºÅ£º" << (data + count)->number << endl;//±£´æÑ§ºÅ
+				outfile << "\n  ĞÕÃû£º" << (data + count)->name << endl;//±£´æĞÕÃû
+				for (inside = 0; inside < M; inside++)//ÄÚ²ãÑ­»·±éÀú¿Î³Ì±£´æ
+				{
+					outfile << "\n  ¿Î³Ì¡¾" << *(subject + inside) << "¡¿µÄ³É¼¨£º" << (data + count)->score[inside] << endl;//±£´æ³É¼¨
+				}
+				outfile << "\n  Æ½¾ù³É¼¨£º" << (data + count)->average << endl;//±£´æÆ½¾ù³É¼¨
+			}
+			outfile << "\n==================================\n" << endl;//×÷Îª·Ö¸ô·û
+			MessageBox(GetConsoleWindow(), TEXT("±£´æÊı¾İ³É¹¦£¡ÎÄ¼şÃûÎª±¾Ä¿Â¼ÏÂµÄ¡°Ñ§Éú³É¼¨ĞÅÏ¢.txt¡±"), TEXT("±£´æ³É¹¦"), MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1);//µ¯³ö³É¹¦ĞÅÏ¢
+			outfile.close();//¹Ø±ÕÊä³öÎÄ¼ş
+		}
+
+		Window(0, 0, 80, 34);//ĞëÉèÖÃ´°¿Ú´óĞ¡
+	}
+	/*ÏµÍ³¼Ü¹¹::³É¼¨±£´æ*/
+
+	/*ÏµÍ³¼Ü¹¹::¹ØÓÚĞÅÏ¢*/
+	void About(int argc, char** argv)//Êä³ö¹ØÓÚĞÅÏ¢
+	{
+		//system("mode con cols=80 lines=32");//¸Ä±ä¿í¸ß£¬×î¿ªÊ¼µÄÓÃ·¨£¬Òòµ÷ÓÃWindows API£¬¹ÊÏÖÒÑ·ÏÆú
+		//system("color f0");//¸Ä±äÑÕÉ«£¬×î¿ªÊ¼µÄÓÃ·¨£¬Òòµ÷ÓÃWindows API£¬¹ÊÏÖÒÑ·ÏÆú
+		//system("title Ñ§Éú³É¼¨¹ÜÀíÏµÍ³::¹ØÓÚ");//¸üĞÂ±êÌâ£¬×î¿ªÊ¼µÄÓÃ·¨£¬Òòµ÷ÓÃWindows API£¬¹ÊÏÖÒÑ·ÏÆú
+		Title(TEXT("Ñ§Éú³É¼¨¹ÜÀíÏµÍ³::¹ØÓÚ"));//µ÷ÓÃTitleº¯ÊıÉèÖÃ×Ó½çÃæµÄ±êÌâ
+		Window(0, 0, 80, 34);//ÉèÖÃ´°¿Ú´óĞ¡
+		do//do-whileÑ­»·£¬ÏÈÖ´ĞĞÒ»´Î
+		{
+			Purple();//°×É«±³¾°£¬×ÏÉ«×ÖÌå
+			Cls();//ÇåÆÁ
+			cout << "\n\n\n\t\t\t\t    [ ¹ØÓÚ ]" << endl;//¸ÄÎª×ÏÉ«×ÖÌå
+			Black();//°×É«±³¾°£¬È±Ê¡ºÚÉ«×ÖÌå
+			cout << "\n\n\t\t\t¡¾³ÌĞò°æ±¾¡¿1.1.99.275" << endl;//×Ô¶¨Òå°æ±¾ºÅ
+			cout << "\n\n\t\t\t¡¾³ÌĞò²ÎÊı¡¿" << argc << endl;//µ÷ÓÃ³ÌĞòÊ±£¬ÓĞÎŞ¸½´øÊäÈëµÄ²ÎÊı
+			cout << "\n\n\t\t\t¡¾³ÌĞòÂ·¾¶¡¿" << *argv << endl;//Êä³ö³ÌĞòÂ·¾¶
+			cout << "\n\n\t\t\t¡¾±àÒë¹¤¾ß¡¿Microsoft Visual Studio" << endl;//×Ô¶¨Òå±àÒë¹¤¾ß
+			cout << "\n\n\t\t\t¡¾°æÈ¨ËùÊô¡¿CaseClosedX@outlook.com" << endl;//°æÈ¨ĞÅÏ¢
+			cout << "\n\n\t\t\t\t¡¾r¡¿·µ»ØÖ÷½çÃæ" << endl;
+			cout << "\n\n\t\t\t\t¡¾q¡¿ÍË³öÏµÍ³" << endl;
+			if (error == true)//catch´íÎó£¬µ÷ÓÃº¯Êı
 			{
 				Error(true);
 			}
-			Input_char(true);//è¾“å…¥å­—ç¬¦
-			switch (input_char)//åˆ¤æ–­è¾“å…¥çš„å­—ç¬¦
+			Input_char(true);//ÊäÈë×Ö·û
+			switch (input_char)//ÅĞ¶ÏÊäÈëµÄ×Ö·û
 			{
-			case 'r':Window(0, 0, 80, 34); break;//è·³å‡ºå¾ªç¯ï¼Œè¿”å›ä¸Šä¸€çº§ï¼Œå³ä¸»ç•Œé¢ï¼Œæ­¤æ¬¡æ²¡æœ‰ç›´æ¥return;æ˜¯ä¸ºå¤šå…ƒåŒ–è€ƒè™‘
-			case 'q':exit(0); break;//qåˆ™ç›´æ¥é€€å‡ºç³»ç»Ÿï¼Œè¿”å›å€¼0
-			default: error = true;//å¦åˆ™ï¼Œè¾“å…¥é”™è¯¯
+			case 'r':Window(0, 0, 80, 34); break;//Ìø³öÑ­»·£¬·µ»ØÉÏÒ»¼¶£¬¼´Ö÷½çÃæ£¬´Ë´ÎÃ»ÓĞÖ±½Óreturn;ÊÇÎª¶àÔª»¯¿¼ÂÇ
+			case 'q':exit(0); break;//qÔòÖ±½ÓÍË³öÏµÍ³£¬·µ»ØÖµ0
+			default: error = true;//·ñÔò£¬ÊäÈë´íÎó
 			}
-		} while (input_char != 'r');//ä¸ºråˆ™æ­¤å‡½æ•°è°ƒç”¨ç»“æŸ
-		Window(0, 0, 80, 34);//é¡»è®¾ç½®çª—å£å¤§å°
+		} while (input_char != 'r');//ÎªrÔò´Ëº¯Êıµ÷ÓÃ½áÊø
+		Window(0, 0, 80, 34);//ĞëÉèÖÃ´°¿Ú´óĞ¡
 	}
-	/*ç³»ç»Ÿæ¶æ„::æˆç»©ä¿å­˜&&å…³äºä¿¡æ¯*/
+	/*ÏµÍ³¼Ü¹¹::³É¼¨±£´æ&&¹ØÓÚĞÅÏ¢*/
 };
-/*===================å°è£…åŠŸèƒ½æ¨¡å—ç±»ï¼Œç»§æ‰¿ç³»ç»Ÿæ¶æ„ç±»ç»“æŸ===================*/
+/*===================·â×°¹¦ÄÜÄ£¿éÀà£¬¼Ì³ĞÏµÍ³¼Ü¹¹Àà½áÊø===================*/
 
 
-/*ç³»ç»Ÿæ¶æ„::ä¸»å‡½æ•°è°ƒç”¨*/
-int main(int argc, char** argv, char** envp)//ä¸»å‡½æ•°ï¼Œå‚æ•°ä¾æ¬¡ä¸ºï¼šä½¿ç”¨CMDçª—å£è¿è¡Œè¿›ç¨‹æ—¶è¾“å…¥å‚æ•°ä¸ªæ•°ï¼Œç¨‹åºç›®å½•ï¼Œç³»ç»Ÿç¯å¢ƒå˜é‡
+/*ÏµÍ³¼Ü¹¹::Ö÷º¯Êıµ÷ÓÃ*/
+int main(int argc, char** argv, char** envp)//Ö÷º¯Êı£¬²ÎÊıÒÀ´ÎÎª£ºÊ¹ÓÃCMD´°¿ÚÔËĞĞ½ø³ÌÊ±ÊäÈë²ÎÊı¸öÊı£¬³ÌĞòÄ¿Â¼£¬ÏµÍ³»·¾³±äÁ¿
 {
-	Framework Build;//å®šä¹‰ç³»ç»Ÿæ¶æ„ç±»
-	Modular Function;//å®šä¹‰åŠŸèƒ½æ¨¡å—ç±»
-	do//do-whileå¾ªç¯ï¼Œå…ˆæ‰§è¡Œä¸€æ¬¡
+	Framework Build;//¶¨ÒåÏµÍ³¼Ü¹¹Àà
+	Modular Function;//¶¨Òå¹¦ÄÜÄ£¿éÀà
+	do//do-whileÑ­»·£¬ÏÈÖ´ĞĞÒ»´Î
 	{
-		Build.Title(TEXT("å­¦ç”Ÿæˆç»©ç®¡ç†ç³»ç»Ÿ::ä¸»ç•Œé¢"));//è®¾ç½®æ ‡é¢˜ï¼Œè°ƒç”¨Buildç±»
-		Build.Black();//æ›´æ–°å‰æ™¯è‰²ã€èƒŒæ™¯è‰²
-		Build.Hide_cursor();//éšè—å…‰æ ‡
-		Build.Window(0, 0, 80, 34);//è®¾ç½®çª—å£å¤§å°
-		Cls();//æ¸…å±
-		//cout << "\033[2J";//Linuxä¸‹çš„æ¸…å±ï¼Œæœ€å¼€å§‹ä½¿ç”¨ï¼Œç°å·²åºŸå¼ƒï¼Œä¸é€‚ç”¨äºWindows 7åŠä»¥ä¸‹ç³»ç»Ÿï¼ŒWindows 10éæœ€æ–°ç‰ˆæœ¬ä¹Ÿéœ€è¦æ‚é‡æ‚é‡
-		Build.Purple();//ç™½è‰²èƒŒæ™¯ï¼Œç´«è‰²å­—ä½“ï¼Œbeautiful
-		cout << "\n\n\n\t\t\t      [ è¯·é€‰æ‹©ç³»ç»ŸåŠŸèƒ½é¡¹ ]" << endl;//æ”¹ä¸ºç´«è‰²å­—ä½“ï¼Œåæ¢å¤ç¼ºçœé»‘è‰²å­—ä½“
-		Build.Black();//æ¢å¤ç¼ºçœé¢œè‰²
-		cout << "\n\n\t\t\t\tã€aã€‘æˆç»©å½•å…¥" << endl;
-		cout << "\n\n\t\t\t\tã€bã€‘æˆç»©æ˜¾ç¤º" << endl;
-		cout << "\n\n\t\t\t\tã€cã€‘æˆç»©æ’åº" << endl;
-		cout << "\n\n\t\t\t\tã€dã€‘æˆç»©ä¿®æ”¹" << endl;
-		cout << "\n\n\t\t\t\tã€eã€‘æˆç»©ç»Ÿè®¡" << endl;
-		cout << "\n\n\t\t\t\tã€fã€‘æˆç»©ä¿å­˜&&å…³äº" << endl;
-		cout << "\n\n\t\t\t\tã€qã€‘é€€å‡ºç³»ç»Ÿ" << endl;
-		if (Build.error == true)//catchè¾“å…¥é”™è¯¯ï¼Œè°ƒç”¨å‡½æ•°
+		Build.Title(TEXT("Ñ§Éú³É¼¨¹ÜÀíÏµÍ³::Ö÷½çÃæ"));//ÉèÖÃ±êÌâ£¬µ÷ÓÃBuildÀà
+		Build.Black();//¸üĞÂÇ°¾°É«¡¢±³¾°É«
+		Build.Hide_cursor();//Òş²Ø¹â±ê
+		Build.Window(0, 0, 80, 34);//ÉèÖÃ´°¿Ú´óĞ¡
+		Cls();//ÇåÆÁ
+		//cout << "\033[2J";//LinuxÏÂµÄÇåÆÁ£¬×î¿ªÊ¼Ê¹ÓÃ£¬ÏÖÒÑ·ÏÆú£¬²»ÊÊÓÃÓÚWindows 7¼°ÒÔÏÂÏµÍ³£¬Windows 10·Ç×îĞÂ°æ±¾Ò²ĞèÒªµàÁ¿µàÁ¿
+		Build.Purple();//°×É«±³¾°£¬×ÏÉ«×ÖÌå£¬beautiful
+		cout << "\n\n\n\t\t\t      [ ÇëÑ¡ÔñÏµÍ³¹¦ÄÜÏî ]" << endl;//¸ÄÎª×ÏÉ«×ÖÌå£¬ºó»Ö¸´È±Ê¡ºÚÉ«×ÖÌå
+		Build.Black();//»Ö¸´È±Ê¡ÑÕÉ«
+		cout << "\n\n\t\t\t\t¡¾a¡¿³É¼¨Â¼Èë" << endl;
+		cout << "\n\n\t\t\t\t¡¾b¡¿³É¼¨ÏÔÊ¾" << endl;
+		cout << "\n\n\t\t\t\t¡¾c¡¿³É¼¨ÅÅĞò" << endl;
+		cout << "\n\n\t\t\t\t¡¾d¡¿³É¼¨ĞŞ¸Ä" << endl;
+		cout << "\n\n\t\t\t\t¡¾e¡¿³É¼¨Í³¼Æ" << endl;
+		cout << "\n\n\t\t\t\t¡¾f¡¿³É¼¨±£´æ" << endl;
+		cout << "\n\n\t\t\t\t¡¾q¡¿¹ØÓÚ" << endl;//ÎªÁË²»ÆÆ»µ¸ñ¾Ö£¬½«ÍË³ö¹¦ÄÜÊÕÂ¼Èë¹ØÓÚÖĞ
+		if (Build.error == true)//catchÊäÈë´íÎó£¬µ÷ÓÃº¯Êı
 		{
-			Build.Error(true);//å‚æ•°ä¸ºä¸»ç•Œé¢ä¸“ç”¨å‚æ•°ï¼ˆä¸»ç•Œé¢è¾ƒå®½ï¼‰
+			Build.Error(true);//²ÎÊıÎªÖ÷½çÃæ×¨ÓÃ²ÎÊı£¨Ö÷½çÃæ½Ï¿í£©
 		}
-		Build.Input_char(true);//è¾“å…¥å­—ç¬¦
-		switch (Build.input_char)//åˆ¤æ–­è¾“å…¥çš„å­—ç¬¦
+		Build.Input_char(true);//ÊäÈë×Ö·û
+		switch (Build.input_char)//ÅĞ¶ÏÊäÈëµÄ×Ö·û
 		{
-		case 'a':Function.Input();  break;//æˆç»©å½•å…¥
-		case 'b':Function.Output(); break;//æˆç»©æ˜¾ç¤º
-		case 'c':Function.Sort(); break;//æˆç»©æ’åº
-		case 'd':Function.Update(); break;//æˆç»©ä¿®æ”¹
-		case 'e':Function.Statistics(); break;//æˆç»©ç»Ÿè®¡
-		case 'f':Function.Save_About(argc, argv); break;//è¾“å‡ºå…³äºä¿¡æ¯ï¼Œå…¶ä¸­ï¼Œenvpå¿’é•¿äº†ï¼Œå½±å“ç¾è§‚ï¼Œå°±ä¸ä¼ å…¥äº†
-		default: Build.error = true;//å¦åˆ™ï¼Œè¾“å…¥é”™è¯¯ï¼Œæ–¹ä¾¿catch error
+		case 'a':Function.Input();  break;//³É¼¨Â¼Èë
+		case 'b':Function.Output(); break;//³É¼¨ÏÔÊ¾
+		case 'c':Function.Sort(); break;//³É¼¨ÅÅĞò
+		case 'd':Function.Update(); break;//³É¼¨ĞŞ¸Ä
+		case 'e':Function.Statistics(); break;//³É¼¨Í³¼Æ
+		case 'f':Function.Save(); break;//³É¼¨±£´æ
+		case 'q':Function.About(argc, argv); break;//µ÷ÓÃ¹ØÓÚº¯Êı£¨º¬ÍË³ö¹¦ÄÜ£©Êä³ö¹ØÓÚĞÅÏ¢£¬ÆäÖĞ£¬envpß¯³¤ÁË£¬Ó°ÏìÃÀ¹Û£¬¾Í²»´«ÈëÁË
+		default: Build.error = true;//·ñÔò£¬ÊäÈë´íÎó£¬·½±ãcatch error
 		}
-	} while (Build.input_char != 'q');//ä¸ºqåˆ™æ­¤å¾ªç¯ç»“æŸ
+	} while (1);//ËÀÑ­»·£¬·Ï³ıÒÔÇ°µÄBuild.input_char != 'q'
 
-	return 0;//ç¨‹åºæ‰§è¡Œå®Œæ¯•ï¼Œè¿”å›å€¼0
+	return 0;//³ÌĞòÖ´ĞĞÍê±Ï£¬·µ»ØÖµ0
 }
-/*ç³»ç»Ÿæ¶æ„::ä¸»å‡½æ•°è°ƒç”¨ç»“æŸ*/
+/*ÏµÍ³¼Ü¹¹::Ö÷º¯Êıµ÷ÓÃ½áÊø*/
