@@ -1,7 +1,9 @@
 # Windows-Student-Achievement-Management-System-BlahBlah
  此项目为我大一时候做的作业，于2021年中秋节开源。
  
- 项目为Windows平台控制台应用程序，功能见文件名；项目仅供学习研究使用。
+ 项目为Windows平台控制台应用程序，功能见文件名。
+ 
+ 项目是我随手写的，代码并不规范，开源只是为了留个纪念。
  
 🌟我的邮箱：CaseClosedX@outlook.com。
 
